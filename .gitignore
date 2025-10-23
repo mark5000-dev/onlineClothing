@@ -16,7 +16,7 @@ lerna-debug.log*
 *.sln
 *.sw?
 .env
-
+*.txt
 
 # Node stuff
 node_modules/

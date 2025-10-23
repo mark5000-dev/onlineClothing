@@ -1,0 +1,23 @@
+[
+  {
+    "id": "p1",
+    "name": "Classic Cotton Tee",
+    "price": 19.99,
+    "pictureUrl": "https://placehold.co/600x800?text=Classic+Tee",
+    "description": "100% cotton, everyday comfort"
+  },
+  {
+    "id": "p2",
+    "name": "Slim Blue Jeans",
+    "price": 49.99,
+    "pictureUrl": "https://placehold.co/600x800?text=Blue+Jeans",
+    "description": "Slim fit denim with stretch"
+  },
+  {
+    "id": "p3",
+    "name": "Lightweight Hoodie",
+    "price": 39.99,
+    "pictureUrl": "https://placehold.co/600x800?text=Hoodie",
+    "description": "Soft brushed interior"
+  }
+]
