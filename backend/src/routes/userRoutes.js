@@ -1,9 +1,11 @@
 import express from 'express';
+import { authMiddleware,adminMiddleware } from '../auth/authMiddleware';
+import userModel from "../models/userModel"
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send('Users route is working!');
+router.get('/', authMiddleware, adminMiddleware, (req, res) => {
+    const users = userModel.find({});
 });
 
 export default router;
