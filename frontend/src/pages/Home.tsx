@@ -1,12 +1,56 @@
-import React from 'react'
-import sampleProducts from '../data/sample-products.json'
-import { ProductGrid } from '../components/ProductGrid'
+import { useEffect } from "react";
+import type { FC } from "react";
+import HeroSection from "../components/HeroSection";
+import Features from "../components/Features";
+import TrendingProducts from "../components/TrendingProducts";
+import { useAppDispatch } from "../redux/hooks";
+import {
+  updateNewList,
+  updateFeaturedList,
+} from "../redux/features/productSlice";
+import type { Product } from "../models/Product";
+import LatestProducts from "../components/LatestProducts";
+import Banner from "../components/Banner";
 
-export const Home: React.FC = () => {
+const Home: FC = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const fetchProducts = () => {
+      fetch("https://dummyjson.com/products/category/smartphones")
+        .then((res) => res.json())
+        .then(({ products }) => {
+          const productList: Product[] = [];
+          products.forEach((product: Product) => {
+            productList.push({
+              id: product.id,
+              title: product.title,
+              images: product.images,
+              price: product.price,
+              rating: product.rating,
+              thumbnail: product.thumbnail,
+              description: product.description,
+              category: product.category,
+              discountPercentage: product.discountPercentage,
+            });
+          });
+          dispatch(updateFeaturedList(productList.slice(0, 8)));
+          dispatch(updateNewList(productList.slice(8, -1)));
+        });
+    };
+    fetchProducts();
+  }, [dispatch]);
+
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-semibold mb-6">New Arrivals</h1>
-      <ProductGrid products={sampleProducts} />
-    </main>
-  )
-}
+    <div className="dark:bg-slate-800">
+      <HeroSection />
+      <Features />
+      <TrendingProducts />
+      <Banner />
+      <LatestProducts />
+      <br />
+    </div>
+  );
+};
+
+export default Home;

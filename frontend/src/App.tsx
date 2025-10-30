@@ -1,28 +1,55 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { CartProvider } from './hooks/useCart'
-import { Header } from './components/Header'
-import { CartDrawer } from './components/CartDrawer'
-import { Home } from './pages/Home'
-import { ProductDetail } from './pages/ProductDetail'
-import { Shop } from './pages/Shop'
-import { Checkout } from './pages/Checkout'
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { Suspense, lazy } from "react";
 
-export const App: React.FC = () => {
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Cart from "./components/Cart";
+import LoginModal from "./components/LoginModal";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ScrollToTopButton from "./components/ScrollToTopButton";
+import BannerPopup from "./components/BannerPopup";
+
+const Home = lazy(() => import("./pages/Home"));
+const Wishlist = lazy(() => import("./pages/Wishlist"));
+const Profile = lazy(() => import("./pages/Profile"));
+const AllCategories = lazy(() => import("./pages/AllCategories"));
+const SingleCategory = lazy(() => import("./pages/SingleCategory"));
+const AllProducts = lazy(() => import("./pages/AllProducts"));
+const SingleProduct = lazy(() => import("./pages/SingleProduct"));
+
+
+
+
+function App() {
   return (
-    <BrowserRouter>
-      <CartProvider>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/checkout" element={<Checkout />} />
-        </Routes>
-        <CartDrawer />
-      </CartProvider>
-    </BrowserRouter>
-  )
+    <Provider store={store}>
+      <Navbar />
+      <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<AllProducts />} />
+        <Route path="/categories" element={<AllCategories />} />
+        <Route path="/product/:productID" element={<SingleProduct />} />
+        <Route path="/category/:slug" element={<SingleCategory />} />
+        <Route path="/wishlist" element={<ProtectedRoute />}>
+          <Route path="/wishlist" element={<Wishlist />} />
+        </Route>
+        <Route path="/account" element={<ProtectedRoute />}>
+          <Route path="/account" element={<Profile />} />
+        </Route>
+      </Routes>
+      </Suspense>
+      <Toaster position="bottom-right" reverseOrder={false} />
+      <Footer />
+      <Cart />
+      <LoginModal />
+      <ScrollToTopButton />
+      <BannerPopup />
+    </Provider>
+  );
 }
 
-export default App
+export default App;

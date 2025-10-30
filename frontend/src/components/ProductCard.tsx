@@ -1,31 +1,88 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useCart } from '../hooks/useCart'
+import type { FC } from "react";
+import type { Product } from "../models/Product";
+import RatingStar from "./RatingStar";
+import { addToCart } from "../redux/features/cartSlice";
+import { useAppDispatch } from "../redux/hooks";
+import toast from "react-hot-toast";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import PriceSection from "./PriceSection";
+import useAuth from "../hooks/useAuth";
 
-export type Product = {
-  id: string
-  name: string
-  price: number
-  pictureUrl?: string
-  description?: string
-}
+const ProductCard: FC<Product> = ({
+  id,
+  price,
+  thumbnail,
+  title,
+  category,
+  rating,
+  discountPercentage,
+}) => {
+  const dispatch = useAppDispatch();
+  const { requireAuth } = useAuth();
 
-export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
-  const { addToCart } = useCart()
+  const addCart = () => {
+    requireAuth(() => {
+      dispatch(
+        addToCart({
+          id,
+          price,
+          title,
+          category,
+          rating,
+          thumbnail,
+          discountPercentage,
+        })
+      );
+      toast.success("item added to cart successfully", {
+        duration: 3000,
+      });
+    });
+  };
 
   return (
-    <article className="card flex flex-col">
-      <Link to={`/product/${product.id}`} className="block aspect-[4/5] bg-slate-100">
-        <img src={product.pictureUrl || 'https://placehold.co/600x800?text=Product'} alt={product.name} className="w-full h-full object-cover" />
-      </Link>
-      <div className="p-4 flex-1 flex flex-col">
-        <h3 className="font-display text-lg text-ui-900 mb-1">{product.name}</h3>
-        <p className="text-sm text-ui-600 flex-1">{product.description}</p>
-        <div className="mt-4 flex items-center justify-between">
-          <div className="text-lg font-semibold text-ui-900">${product.price.toFixed(2)}</div>
-          <button onClick={() => addToCart(product)} className="inline-flex items-center px-3 py-1.5 bg-brand text-white rounded-md">Add</button>
-        </div>
+    <div className="border border-gray-200 font-lato" data-test="product-card">
+      <div className="text-center border-b border-gray-200">
+        <Link to={{ pathname: `/product/${id}` }}>
+          <img
+            src={thumbnail}
+            alt={title}
+            loading="lazy"
+            className="inline-block h-60 transition-transform duration-200 hover:scale-110"
+          />
+        </Link>
       </div>
-    </article>
-  )
-}
+      <div className="px-4 pt-4">
+        <p className="text-gray-500 text-[14px] font-medium dark:text-white">
+          {category}
+        </p>
+        <Link
+          className="font-semibold hover:underline dark:text-white overflow-hidden text-ellipsis whitespace-nowrap block"
+          to={{ pathname: `/product/${id}` }}
+          title={title}
+        >
+          {title}
+        </Link>
+      </div>
+      <div className="px-4">
+        <RatingStar rating={rating} />
+      </div>
+      <div className="flex flex-wrap items-center justify-between px-4 pb-4">
+        {discountPercentage && (
+          <PriceSection discountPercentage={discountPercentage} price={price} />
+        )}
+        <button
+          type="button"
+          className="flex items-center space-x-2 hover:bg-blue-500 text-white py-2 px-4 rounded bg-pink-500"
+          onClick={addCart}
+          data-test="add-cart-btn"
+          title="ADD TO CART"
+        >
+          <AiOutlineShoppingCart />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ProductCard;
