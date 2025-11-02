@@ -4,7 +4,7 @@ import type { HomeSlice } from "../../models/HomeSlice";
 
 const initialState: HomeSlice = {
   isBannerVisible: localStorage.getItem("isBannerVisibleClosed") === "true" ? false : true,
-  isDarkMode: false,
+  isDarkMode: true,
   isLoading: false,
 };
 

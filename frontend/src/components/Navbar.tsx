@@ -25,27 +25,27 @@ const Navbar: FC = () => {
   };
 
   return (
-    <div className="py-4 bg-white dark:bg-slate-800 top-0 sticky z-10 shadow-lg font-karla">
+    <div className="py-4 top-0 sticky z-10 shadow-lg font-karla">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           <Link
             to="/"
-            className="text-4xl font-bold dark:text-white"
+            className="text-4xl font-bold"
             data-test="main-logo"
           >
-            Shopify
+            <img src="/logo.jpg" alt="Logo" className="w-16" />
           </Link>
-          <div className="lg:flex hidden w-center max-w-[500px] border-1 border-blue-500 rounded overflow-hidden">
+          <div className="lg:flex hidden w-center max-w-[500px] border-1 rounded overflow-hidden">
             <input
               type="text"
               placeholder="Search for a product..."
-              className="border-2 border-blue-500 px-6 py-2 w-full dark:text-white dark:bg-slate-800"
+              className="border-2 px-6 py-2 w-full"
             />
-            <div className="bg-blue-500 text-white text-[26px] grid place-items-center px-4">
+            <div className="text-[26px] grid place-items-center px-4">
               <BsSearch />
             </div>
           </div>
-          <div className="flex gap-4 md:gap-8 items-center dark:text-white">
+          <div className="flex gap-4 md:gap-8 items-center">
             <Link
               to="/products"
               className="text-xl font-bold"
@@ -68,14 +68,14 @@ const Navbar: FC = () => {
                   className="w-6"
                 />
               ) : (
-                <FaUser className="text-gray-500 text-2xl dark:text-white" />
+                <FaUser className="text-2xl" />
               )}
-              <div className="text-gray-500 text-2xl">
+              <div className="text-2xl">
                 {username !== "" ? (
                   <CustomPopup />
                 ) : (
                   <span
-                    className="cursor-pointer hover:opacity-85 dark:text-white"
+                    className="cursor-pointer hover:opacity-85"
                     onClick={() => dispatch(updateModal(true))}
                     data-test="login-btn"
                   >
@@ -85,13 +85,13 @@ const Navbar: FC = () => {
               </div>
             </div>
             <div
-              className="text-gray-500 text-[32px] relative hover:cursor-pointer hover:opacity-80"
+              className="relative hover:cursor-pointer hover:opacity-80"
               onClick={showCart}
               data-test="cart-btn"
             >
-              <AiOutlineShoppingCart className="dark:text-white" />
+              <AiOutlineShoppingCart className="text-gold-light dark:text-gold-dark" size={"32"}/>
               <div
-                className="absolute top-[-15px] right-[-10px] bg-red-600 w-[25px] h-[25px] rounded-full text-white text-[14px] grid place-items-center"
+                className="absolute top-[-15px] right-[-10px] w-[25px] h-[25px] rounded-full text-[14px] grid place-items-center"
                 data-test="cart-item-count"
               >
                 {cartCount}
