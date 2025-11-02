@@ -8,6 +8,10 @@ const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const SingleProduct = lazy(() => import('./pages/SingleProduct'));
 const Cart = lazy(() => import('./pages/Cart'));
+const Category = lazy(() => import('./pages/Categories'));
+const SingleCategory = lazy(() => import('./pages/SingleCategory'));
+const Products = lazy(() => import('./pages/Products'));
+
 
 
 export default function App() {
@@ -17,9 +21,12 @@ export default function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products />} />
             <Route path="/product/:id" element={<SingleProduct />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/about" element={<About />} />
+            <Route path="/categories" element={<Category />} />
+            <Route path="/category/:categoryName" element={<SingleCategory />} />
           </Routes>
         </Suspense>
       <Footer />

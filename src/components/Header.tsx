@@ -1,6 +1,7 @@
 import { ShoppingBag, Search, User, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,21 +20,21 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            <Link to="/products" className="text-foreground hover:text-[#D4AF37] transition-colors">
               New Arrivals
-            </a>
-            <a href="#" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            </Link>
+            <Link to="/category/women" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Women
-            </a>
-            <a href="#" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            </Link>
+            <Link to="/category/men" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Men
-            </a>
-            <a href="#" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            </Link>
+            <Link to="/category/collections" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Collections
-            </a>
-            <a href="#" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            </Link>
+            <Link to="/about" className="text-foreground hover:text-[#D4AF37] transition-colors">
               About
-            </a>
+            </Link>
           </nav>
 
           {/* Actions */}
