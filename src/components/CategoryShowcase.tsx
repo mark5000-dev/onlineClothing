@@ -1,4 +1,6 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { Card } from "./ui/card";
+import { ArrowRight } from "lucide-react";
 
 const categories = [
   {
@@ -35,9 +37,9 @@ export function CategoryShowcase() {
         {/* Category Grid */}
         <div className="grid md:grid-cols-3 gap-8">
           {categories.map((category, index) => (
-            <div
+            <Card
               key={index}
-              className="group relative overflow-hidden cursor-pointer"
+              className="group relative overflow-hidden cursor-pointer border-0"
             >
               <div className="relative aspect-[3/4] overflow-hidden">
                 <ImageWithFallback
@@ -58,22 +60,10 @@ export function CategoryShowcase() {
                 </p>
                 <span className="text-[#D4AF37] inline-flex items-center gap-2 group-hover:gap-4 transition-all">
                   Explore Collection
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
+                  <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </div>

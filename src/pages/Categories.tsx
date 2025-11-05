@@ -1,6 +1,10 @@
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
+import { Button } from "../components/ui/button";
+import { Separator } from "../components/ui/separator";
 import { ArrowRight } from "lucide-react";
 
 const categories = [
@@ -51,7 +55,6 @@ const categories = [
 export default function Categories() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
 
       <div className="flex-1">
         {/* Hero Section */}
@@ -75,10 +78,9 @@ export default function Categories() {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {categories.map((category) => (
-                <a
+                <Card
                   key={category.id}
-                  href={`#category-${category.id}`}
-                  className="group relative overflow-hidden bg-card transition-all duration-500 hover:shadow-2xl"
+                  className="group relative overflow-hidden border-0 transition-all duration-500 hover:shadow-2xl cursor-pointer"
                 >
                   {/* Image */}
                   <div className="relative aspect-[4/5] overflow-hidden bg-muted">
@@ -91,14 +93,14 @@ export default function Categories() {
                   </div>
 
                   {/* Content Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                  <CardContent className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                     <div className="mb-2">
-                      <h3 className="font-serif text-[1.75rem] mb-2">
+                      <CardTitle className="font-serif text-[1.75rem] mb-2 text-white">
                         {category.name}
-                      </h3>
-                      <p className="text-white/90 text-sm mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                      </CardTitle>
+                      <CardDescription className="text-white/90 text-sm mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
                         {category.description}
-                      </p>
+                      </CardDescription>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-white/80">
@@ -109,13 +111,13 @@ export default function Categories() {
                         <ArrowRight className="h-4 w-4" />
                       </div>
                     </div>
-                  </div>
+                  </CardContent>
 
                   {/* Top Badge */}
-                  <div className="absolute top-6 right-6 bg-[#D4AF37] text-black px-4 py-2 text-sm transform translate-x-full group-hover:translate-x-0 transition-transform duration-300">
+                  <Badge className="absolute top-6 right-6 bg-[#D4AF37] text-black px-4 py-2 text-sm transform translate-x-full group-hover:translate-x-0 transition-transform duration-300 hover:bg-[#C5A028]">
                     {category.itemCount}+ Items
-                  </div>
-                </a>
+                  </Badge>
+                </Card>
               ))}
             </div>
           </div>
@@ -154,26 +156,26 @@ export default function Categories() {
         {/* CTA Section */}
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 lg:px-8">
-            <div className="bg-card p-12 md:p-16 text-center">
-              <h2 className="font-serif text-[2rem] md:text-[3rem] mb-4">
-                Need Help Finding Something?
-              </h2>
-              <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-                Our style experts are here to assist you in discovering the perfect pieces 
-                for your wardrobe
-              </p>
-              <a
-                href="#contact"
-                className="inline-block bg-[#D4AF37] text-black px-8 py-4 hover:bg-[#C5A028] transition-colors"
-              >
-                Contact Our Stylists
-              </a>
-            </div>
+            <Card className="p-12 md:p-16 text-center border-0">
+              <CardHeader>
+                <CardTitle className="font-serif text-[2rem] md:text-[3rem] mb-4">
+                  Need Help Finding Something?
+                </CardTitle>
+                <CardDescription className="text-lg mb-8 max-w-2xl mx-auto">
+                  Our style experts are here to assist you in discovering the perfect pieces 
+                  for your wardrobe
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button size="lg" className="bg-[#D4AF37] text-black hover:bg-[#C5A028] px-8">
+                  Contact Our Stylists
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </section>
       </div>
-
-      <Footer />
+      
     </div>
   );
 }

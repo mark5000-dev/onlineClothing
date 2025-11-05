@@ -1,4 +1,6 @@
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 
 const footerLinks = {
   shop: [
@@ -42,31 +44,35 @@ export function Footer() {
             </p>
             
             {/* Social Media */}
-            <div className="flex gap-4">
-              <a
-                href="#"
-                className="w-10 h-10 border border-border flex items-center justify-center hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors"
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                className="hover:border-[#D4AF37] hover:text-[#D4AF37]"
               >
                 <Instagram className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 border border-border flex items-center justify-center hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors"
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="hover:border-[#D4AF37] hover:text-[#D4AF37]"
               >
                 <Facebook className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 border border-border flex items-center justify-center hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors"
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="hover:border-[#D4AF37] hover:text-[#D4AF37]"
               >
                 <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 border border-border flex items-center justify-center hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors"
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="hover:border-[#D4AF37] hover:text-[#D4AF37]"
               >
                 <Youtube className="h-5 w-5" />
-              </a>
+              </Button>
             </div>
           </div>
 
@@ -121,7 +127,8 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+        <Separator className="my-8" />
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-muted-foreground text-sm">
             © 2025 LUXÉ. All rights reserved.
           </p>

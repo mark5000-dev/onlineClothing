@@ -2,6 +2,8 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Badge } from "./ui/badge";
 import { Heart } from "lucide-react";
 import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 
 const products = [
   {
@@ -55,9 +57,9 @@ export function ProductGrid() {
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product) => (
-            <div
+            <Card
               key={product.id}
-              className="group relative bg-background overflow-hidden transition-all hover:shadow-xl"
+              className="group relative overflow-hidden transition-all hover:shadow-xl border-0"
             >
               {/* Product Image */}
               <div className="relative aspect-[3/4] overflow-hidden bg-muted">
@@ -97,7 +99,7 @@ export function ProductGrid() {
               </div>
 
               {/* Product Info */}
-              <div className="p-6">
+              <CardContent className="p-6">
                 <p className="text-sm text-muted-foreground mb-2">
                   {product.category}
                 </p>
@@ -107,8 +109,8 @@ export function ProductGrid() {
                 <p className="text-[#D4AF37]">
                   ${product.price.toLocaleString()}
                 </p>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
 

@@ -1,57 +1,63 @@
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { Award, Users, Globe, Heart } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
+import { Button } from "../components/ui/button";
+import { Separator } from "../components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import { Award, Heart, Globe, Sparkles, Users, TrendingUp } from "lucide-react";
+
+const stats = [
+  { label: "Years of Excellence", value: "25+", icon: Award },
+  { label: "Happy Customers", value: "50K+", icon: Heart },
+  { label: "Countries Served", value: "45+", icon: Globe },
+  { label: "Exclusive Products", value: "10K+", icon: Sparkles },
+];
+
+const team = [
+  {
+    name: "Isabella Chen",
+    role: "Creative Director",
+    image: "https://images.unsplash.com/photo-1567777301743-3b7ef158aadf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBmYXNoaW9uJTIwbW9kZWx8ZW58MXx8fHwxNzYyMzIxNDI1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  },
+  {
+    name: "Marcus Williams",
+    role: "Head of Design",
+    image: "https://images.unsplash.com/photo-1670177257750-9b47927f68eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB3YXRjaHxlbnwxfHx8fDE3NjIzMTg1NzR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  },
+  {
+    name: "Sophia Laurent",
+    role: "Brand Director",
+    image: "https://images.unsplash.com/photo-1722842529941-825976fc14f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNpZ25lciUyMHN1bmdsYXNzZXN8ZW58MXx8fHwxNzYyMzIxMDQ2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  },
+  {
+    name: "Alexander Ross",
+    role: "Chief Curator",
+    image: "https://images.unsplash.com/photo-1615160460367-dcccd27e11ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBwZXJmdW1lfGVufDF8fHx8MTc2MjM2MzcwOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  },
+];
 
 const values = [
   {
     icon: Award,
     title: "Excellence",
-    description:
-      "We pursue perfection in every stitch, every fabric choice, and every design decision.",
-  },
-  {
-    icon: Users,
-    title: "Craftsmanship",
-    description:
-      "Our master artisans bring decades of experience to create truly exceptional pieces.",
-  },
-  {
-    icon: Globe,
-    title: "Sustainability",
-    description:
-      "Committed to ethical sourcing and sustainable practices in luxury fashion.",
+    description: "We settle for nothing less than perfection in every piece we offer, ensuring the highest standards of quality and craftsmanship.",
   },
   {
     icon: Heart,
     title: "Passion",
-    description:
-      "Every piece we create is infused with our love for timeless elegance and style.",
-  },
-];
-
-const timeline = [
-  {
-    year: "1985",
-    title: "The Beginning",
-    description:
-      "Founded in Milan by master tailor Alessandro Rossi, LUXÉ was born from a vision to create timeless luxury.",
+    description: "Our love for luxury fashion drives us to curate collections that inspire and delight our discerning clientele.",
   },
   {
-    year: "1998",
-    title: "Global Expansion",
-    description:
-      "Opened flagship stores in Paris, London, and New York, bringing Italian craftsmanship to the world.",
+    icon: Globe,
+    title: "Sustainability",
+    description: "We're committed to ethical sourcing and sustainable practices, ensuring luxury doesn't come at the cost of our planet.",
   },
   {
-    year: "2010",
-    title: "Innovation",
-    description:
-      "Launched our sustainable luxury line, pioneering eco-conscious haute couture.",
-  },
-  {
-    year: "2025",
-    title: "Digital Future",
-    description:
-      "Embracing technology while maintaining our commitment to artisanal excellence.",
+    icon: Users,
+    title: "Community",
+    description: "Building lasting relationships with our customers, artisans, and partners is at the heart of everything we do.",
   },
 ];
 
@@ -61,147 +67,27 @@ export default function About() {
 
       <div className="flex-1">
         {/* Hero Section */}
-        <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
+        <section className="relative h-[60vh] min-h-[500px] bg-foreground text-background overflow-hidden">
           <div className="absolute inset-0">
             <ImageWithFallback
-              src="https://images.unsplash.com/photo-1704729105381-f579cfcefd63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwYXRlbGllciUyMHdvcmtzcGFjZXxlbnwxfHx8fDE3NjIwNzExNjh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-              alt="LUXÉ Atelier"
-              className="w-full h-full object-cover"
+              src="https://images.unsplash.com/photo-1608494604059-7971195e13e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzdG9yZSUyMGludGVyaW9yfGVufDF8fHx8MTc2MjI0OTg4Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+              alt="Luxury Store"
+              className="w-full h-full object-cover opacity-30"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40" />
           </div>
-
-          <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-center">
-            <div className="max-w-2xl">
-              <div className="w-16 h-1 bg-[#D4AF37] mb-6" />
-              <h1 className="font-serif text-white text-[3.5rem] md:text-[5rem] leading-tight mb-6">
-                Our Story
-              </h1>
-              <p className="text-white/90 text-lg md:text-xl">
-                Four decades of dedication to craftsmanship, elegance, and
-                timeless luxury fashion
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Mission Section */}
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="font-serif text-[2.5rem] md:text-[3.5rem] mb-6">
-                Crafting Timeless Elegance
-              </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                At LUXÉ, we believe that true luxury is found in the details.
-                Every piece in our collection is a testament to the artistry of
-                our master craftsmen, who bring together traditional techniques
-                and contemporary design to create fashion that transcends
-                trends.
-              </p>
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                Founded in Milan in 1985, we've remained dedicated to our core
-                values: exceptional quality, sustainable practices, and designs
-                that empower those who wear them. Our journey is one of passion,
-                precision, and an unwavering commitment to excellence.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Values Section */}
-        <section className="py-20 bg-card">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="font-serif text-[2.5rem] md:text-[3.5rem] mb-4">
-                Our Values
-              </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                The principles that guide everything we create
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {values.map((value, index) => (
-                <div
-                  key={index}
-                  className="text-center group hover:transform hover:-translate-y-2 transition-all"
-                >
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-[#D4AF37]/10 rounded-full mb-6 group-hover:bg-[#D4AF37] transition-colors">
-                    <value.icon className="h-8 w-8 text-[#D4AF37] group-hover:text-black transition-colors" />
-                  </div>
-                  <h3 className="mb-3">{value.title}</h3>
-                  <p className="text-muted-foreground">{value.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Heritage Section */}
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
-              <div className="order-2 lg:order-1">
-                <div className="w-16 h-1 bg-[#D4AF37] mb-6" />
-                <h2 className="font-serif text-[2.5rem] md:text-[3.5rem] mb-6">
-                  Italian Heritage, Global Vision
-                </h2>
-                <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                  Our atelier in Milan remains the heart of our operations,
-                  where master tailors and designers collaborate to create each
-                  season's collection. Every garment begins with hand-selected
-                  fabrics from the finest mills in Italy and beyond.
-                </p>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  From the initial sketch to the final stitch, our process
-                  honors traditional craftsmanship while embracing innovation.
-                  The result is fashion that's both contemporary and timeless,
-                  sophisticated and wearable.
-                </p>
-              </div>
-              <div className="order-1 lg:order-2">
-                <div className="relative aspect-[4/5] overflow-hidden">
-                  <ImageWithFallback
-                    src="https://images.unsplash.com/photo-1758297679736-2e6ff92d2021?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBmYXNoaW9uJTIwZGV0YWlsfGVufDF8fHx8MTc2MjA3MTE2OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                    alt="Craftsmanship Detail"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Timeline Section */}
-        <section className="py-20 bg-foreground text-background">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="font-serif text-[2.5rem] md:text-[3.5rem] mb-4">
-                Our Journey
-              </h2>
-              <p className="text-background/80 text-lg max-w-2xl mx-auto">
-                Four decades of milestones and achievements
-              </p>
-            </div>
-
-            <div className="max-w-4xl mx-auto">
-              {timeline.map((item, index) => (
-                <div
-                  key={index}
-                  className="relative pl-8 pb-12 last:pb-0 border-l-2 border-[#D4AF37]/30"
-                >
-                  {/* Timeline Dot */}
-                  <div className="absolute -left-[9px] top-0 w-4 h-4 bg-[#D4AF37] rounded-full" />
-
-                  <div className="bg-background/5 backdrop-blur-sm p-6 border border-background/10">
-                    <div className="text-[#D4AF37] mb-2">{item.year}</div>
-                    <h3 className="mb-3">{item.title}</h3>
-                    <p className="text-background/70">{item.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          
+          <div className="relative container mx-auto px-4 lg:px-8 h-full flex flex-col justify-center">
+            <Badge className="bg-[#D4AF37] text-black hover:bg-[#C5A028] mb-4 w-fit">
+              Est. 1998
+            </Badge>
+            <h1 className="font-serif text-white text-[3rem] md:text-[5rem] leading-tight mb-6">
+              Redefining Luxury
+            </h1>
+            <p className="text-white/90 text-lg md:text-xl max-w-2xl">
+              For over two decades, LUXÉ has been the destination for those who 
+              appreciate the finest in fashion and craftsmanship.
+            </p>
           </div>
         </section>
 
@@ -209,59 +95,232 @@ export default function About() {
         <section className="py-20 bg-card">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="text-[#D4AF37] text-[3rem] font-serif mb-2">
-                  40+
-                </div>
-                <p className="text-muted-foreground">Years of Excellence</p>
+              {stats.map((stat, index) => {
+                const Icon = stat.icon;
+                return (
+                  <Card key={index} className="text-center border-0">
+                    <CardContent className="p-8">
+                      <Icon className="h-8 w-8 mx-auto mb-4 text-[#D4AF37]" />
+                      <div className="font-serif text-[2.5rem] mb-2">{stat.value}</div>
+                      <p className="text-muted-foreground">{stat.label}</p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Our Story */}
+        <section className="py-20 bg-background">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <Badge variant="outline" className="mb-4">Our Story</Badge>
+                <h2 className="font-serif text-[2.5rem] md:text-[3.5rem] mb-6">
+                  A Legacy of Excellence
+                </h2>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  Founded in 1998 by visionary entrepreneur Élise Beaumont, LUXÉ began 
+                  as a small boutique in Paris with a simple mission: to bring the world's 
+                  finest luxury fashion to discerning individuals who appreciate quality 
+                  and craftsmanship.
+                </p>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  What started as a curated collection of European designers has evolved 
+                  into a global destination for luxury fashion, accessories, and lifestyle 
+                  pieces. Today, we work with over 200 prestigious brands and independent 
+                  artisans from around the world.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Our commitment to excellence remains unchanged. Every piece in our 
+                  collection is carefully selected for its exceptional quality, timeless 
+                  design, and the story it tells.
+                </p>
               </div>
-              <div className="text-center">
-                <div className="text-[#D4AF37] text-[3rem] font-serif mb-2">
-                  50+
+              
+              <div className="relative">
+                <Card className="overflow-hidden border-0">
+                  <div className="aspect-[4/5] bg-muted">
+                    <ImageWithFallback
+                      src="https://images.unsplash.com/photo-1747451050504-3b268d62c3da?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjcmFmdHNtYW5zaGlwfGVufDF8fHx8MTc2MjM2NDYwNnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                      alt="Craftsmanship"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </Card>
+                <div className="absolute -bottom-8 -left-8 bg-[#D4AF37] text-black p-8 max-w-xs">
+                  <p className="text-sm mb-2">Our Philosophy</p>
+                  <p className="font-serif text-xl">
+                    "True luxury is timeless, sustainable, and meaningful."
+                  </p>
                 </div>
-                <p className="text-muted-foreground">Master Artisans</p>
               </div>
-              <div className="text-center">
-                <div className="text-[#D4AF37] text-[3rem] font-serif mb-2">
-                  25+
+            </div>
+          </div>
+        </section>
+
+        {/* Values */}
+        <section className="py-20 bg-card">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="text-center mb-16">
+              <Badge variant="outline" className="mb-4">Our Values</Badge>
+              <h2 className="font-serif text-[2.5rem] md:text-[3.5rem] mb-4">
+                What We Stand For
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Our core values guide every decision we make and every relationship we build
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {values.map((value, index) => {
+                const Icon = value.icon;
+                return (
+                  <Card key={index} className="border-border">
+                    <CardHeader>
+                      <div className="flex items-start gap-4">
+                        <div className="p-3 bg-[#D4AF37]/10 rounded-lg">
+                          <Icon className="h-6 w-6 text-[#D4AF37]" />
+                        </div>
+                        <div>
+                          <CardTitle className="mb-2">{value.title}</CardTitle>
+                          <CardDescription className="leading-relaxed">
+                            {value.description}
+                          </CardDescription>
+                        </div>
+                      </div>
+                    </CardHeader>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Team */}
+        <section className="py-20 bg-background">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="text-center mb-16">
+              <Badge variant="outline" className="mb-4">Our Team</Badge>
+              <h2 className="font-serif text-[2.5rem] md:text-[3.5rem] mb-4">
+                Meet the Visionaries
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                The talented individuals behind LUXÉ's curated collections
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {team.map((member, index) => (
+                <Card key={index} className="overflow-hidden border-0 group cursor-pointer">
+                  <div className="relative aspect-[3/4] bg-muted overflow-hidden">
+                    <ImageWithFallback
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <CardContent className="p-6 text-center">
+                    <h3 className="mb-2">{member.name}</h3>
+                    <p className="text-sm text-muted-foreground">{member.role}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Sustainability Section */}
+        <section className="py-20 bg-card">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <Card className="overflow-hidden border-0 order-2 lg:order-1">
+                <div className="aspect-[4/3] bg-muted">
+                  <ImageWithFallback
+                    src="https://images.unsplash.com/photo-1718963581743-10d76f92d42f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwYXRlbGllcnxlbnwxfHx8fDE3NjIzNjQ2MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                    alt="Sustainability"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <p className="text-muted-foreground">Countries Worldwide</p>
-              </div>
-              <div className="text-center">
-                <div className="text-[#D4AF37] text-[3rem] font-serif mb-2">
-                  100k+
-                </div>
-                <p className="text-muted-foreground">Satisfied Clients</p>
+              </Card>
+
+              <div className="order-1 lg:order-2">
+                <Badge variant="outline" className="mb-4">Sustainability</Badge>
+                <h2 className="font-serif text-[2.5rem] md:text-[3.5rem] mb-6">
+                  Luxury with Responsibility
+                </h2>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  We believe that true luxury considers its impact on the world. That's 
+                  why we're committed to sustainable practices throughout our supply chain.
+                </p>
+                
+                <Tabs defaultValue="ethical" className="mb-8">
+                  <TabsList>
+                    <TabsTrigger value="ethical">Ethical Sourcing</TabsTrigger>
+                    <TabsTrigger value="circular">Circular Fashion</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="ethical" className="mt-4">
+                    <ul className="space-y-3 text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2" />
+                        <span>Partnership with certified ethical manufacturers</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2" />
+                        <span>Fair wages and working conditions for all artisans</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2" />
+                        <span>Transparent supply chain tracking</span>
+                      </li>
+                    </ul>
+                  </TabsContent>
+                  <TabsContent value="circular" className="mt-4">
+                    <ul className="space-y-3 text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2" />
+                        <span>Repair and restoration services for our products</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2" />
+                        <span>Pre-owned luxury program</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2" />
+                        <span>Sustainable packaging materials</span>
+                      </li>
+                    </ul>
+                  </TabsContent>
+                </Tabs>
+
+                <Button className="bg-[#D4AF37] text-black hover:bg-[#C5A028]">
+                  Learn More About Our Initiatives
+                </Button>
               </div>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="font-serif text-[2.5rem] md:text-[3.5rem] mb-6">
-                Experience LUXÉ
-              </h2>
-              <p className="text-muted-foreground text-lg mb-8">
-                Visit our flagship store in Milan or explore our collection
-                online. Discover the difference that true craftsmanship makes.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="#"
-                  className="inline-flex items-center justify-center px-8 py-3 bg-[#D4AF37] text-black hover:bg-[#C5A028] transition-colors"
-                >
-                  Shop Collection
-                </a>
-                <a
-                  href="#"
-                  className="inline-flex items-center justify-center px-8 py-3 border border-foreground hover:bg-foreground hover:text-background transition-colors"
-                >
-                  Find a Store
-                </a>
-              </div>
+        <section className="py-20 bg-foreground text-background">
+          <div className="container mx-auto px-4 lg:px-8 text-center">
+            <TrendingUp className="h-12 w-12 mx-auto mb-6 text-[#D4AF37]" />
+            <h2 className="font-serif text-[2.5rem] md:text-[3.5rem] mb-6">
+              Join the LUXÉ Experience
+            </h2>
+            <p className="text-background/80 text-lg mb-8 max-w-2xl mx-auto">
+              Become part of our community and discover a world of luxury, 
+              craftsmanship, and timeless style.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" className="bg-[#D4AF37] text-black hover:bg-[#C5A028]">
+                Explore Collections
+              </Button>
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black">
+                Contact Us
+              </Button>
             </div>
           </div>
         </section>

@@ -1,8 +1,14 @@
 import { useState } from "react";
-
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Badge } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../components/ui/breadcrumb";
+import { Tabs, TabsList, TabsTrigger } from "../components/ui/tabs";
+import { Separator } from "../components/ui/separator";
+import { Label } from "../components/ui/label";
 import {
   Select,
   SelectContent,
@@ -98,6 +104,7 @@ export default function SingleCategory() {
 
   return (
     <div className="min-h-screen flex flex-col">
+
       <div className="flex-1">
         {/* Hero Banner */}
         <section className="relative h-[45vh] min-h-[350px] overflow-hidden">
@@ -112,17 +119,25 @@ export default function SingleCategory() {
 
           <div className="relative container mx-auto px-4 lg:px-8 h-full flex flex-col justify-center">
             {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-sm text-white/80 mb-4">
-              <a href="#" className="hover:text-[#D4AF37] transition-colors">
-                Home
-              </a>
-              <span>/</span>
-              <a href="#" className="hover:text-[#D4AF37] transition-colors">
-                Categories
-              </a>
-              <span>/</span>
-              <span className="text-white">Women's Collection</span>
-            </div>
+            <Breadcrumb className="mb-4">
+              <BreadcrumbList className="text-white/80">
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="#" className="hover:text-[#D4AF37] transition-colors">
+                    Home
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="text-white/60" />
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="#" className="hover:text-[#D4AF37] transition-colors">
+                    Categories
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="text-white/60" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage className="text-white">Women's Collection</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
 
             <h1 className="font-serif text-white text-[3rem] md:text-[4.5rem] leading-tight mb-4">
               Women's Collection
@@ -195,96 +210,108 @@ export default function SingleCategory() {
               <aside
                 className={`lg:block ${
                   showFilters ? "block" : "hidden"
-                } lg:col-span-1 space-y-8`}
+                } lg:col-span-1 space-y-6`}
               >
                 {/* Price Range */}
-                <div className="bg-card p-6">
-                  <h3 className="mb-4 pb-3 border-b border-border">Price Range</h3>
-                  <div className="space-y-4">
-                    <Slider
-                      value={priceRange}
-                      onValueChange={setPriceRange}
-                      max={3000}
-                      step={50}
-                      className="w-full"
-                    />
-                    <div className="flex justify-between text-sm text-muted-foreground">
-                      <span>${priceRange[0]}</span>
-                      <span>${priceRange[1]}</span>
+                <Card>
+                  <CardContent className="p-6">
+                    <Label className="mb-4 block">Price Range</Label>
+                    <Separator className="mb-4" />
+                    <div className="space-y-4">
+                      <Slider
+                        value={priceRange}
+                        onValueChange={setPriceRange}
+                        max={3000}
+                        step={50}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-sm text-muted-foreground">
+                        <span>${priceRange[0]}</span>
+                        <span>${priceRange[1]}</span>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
 
                 {/* Size */}
-                <div className="bg-card p-6">
-                  <h3 className="mb-4 pb-3 border-b border-border">Size</h3>
-                  <div className="grid grid-cols-3 gap-2">
-                    {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
-                      <Button
-                        key={size}
-                        variant="outline"
-                        size="sm"
-                        className="hover:border-[#D4AF37] hover:text-[#D4AF37]"
-                      >
-                        {size}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
+                <Card>
+                  <CardContent className="p-6">
+                    <Label className="mb-4 block">Size</Label>
+                    <Separator className="mb-4" />
+                    <div className="grid grid-cols-3 gap-2">
+                      {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
+                        <Button
+                          key={size}
+                          variant="outline"
+                          size="sm"
+                          className="hover:border-[#D4AF37] hover:text-[#D4AF37]"
+                        >
+                          {size}
+                        </Button>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
 
                 {/* Color */}
-                <div className="bg-card p-6">
-                  <h3 className="mb-4 pb-3 border-b border-border">Color</h3>
-                  <div className="grid grid-cols-5 gap-3">
-                    {[
-                      "#000000",
-                      "#FFFFFF",
-                      "#8B4513",
-                      "#1A1A1A",
-                      "#D4AF37",
-                      "#2C3E50",
-                      "#C19A6B",
-                      "#8B0000",
-                      "#2F4F4F",
-                      "#4B0082",
-                    ].map((color) => (
-                      <button
-                        key={color}
-                        className="w-10 h-10 rounded-full border-2 border-border hover:border-[#D4AF37] transition-colors"
-                        style={{ backgroundColor: color }}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <Card>
+                  <CardContent className="p-6">
+                    <Label className="mb-4 block">Color</Label>
+                    <Separator className="mb-4" />
+                    <div className="grid grid-cols-5 gap-3">
+                      {[
+                        "#000000",
+                        "#FFFFFF",
+                        "#8B4513",
+                        "#1A1A1A",
+                        "#D4AF37",
+                        "#2C3E50",
+                        "#C19A6B",
+                        "#8B0000",
+                        "#2F4F4F",
+                        "#4B0082",
+                      ].map((color) => (
+                        <button
+                          key={color}
+                          className="w-10 h-10 rounded-full border-2 border-border hover:border-[#D4AF37] transition-colors"
+                          style={{ backgroundColor: color }}
+                        />
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
 
                 {/* Material */}
-                <div className="bg-card p-6">
-                  <h3 className="mb-4 pb-3 border-border">Material</h3>
-                  <div className="space-y-3">
-                    {["Silk", "Wool", "Cotton", "Cashmere", "Leather", "Linen"].map(
-                      (material) => (
-                        <div key={material} className="flex items-center gap-2">
-                          <Checkbox id={material} />
-                          <label
-                            htmlFor={material}
-                            className="text-sm cursor-pointer hover:text-[#D4AF37] transition-colors"
-                          >
-                            {material}
-                          </label>
-                        </div>
-                      )
-                    )}
-                  </div>
-                </div>
+                <Card>
+                  <CardContent className="p-6">
+                    <Label className="mb-4 block">Material</Label>
+                    <Separator className="mb-4" />
+                    <div className="space-y-3">
+                      {["Silk", "Wool", "Cotton", "Cashmere", "Leather", "Linen"].map(
+                        (material) => (
+                          <div key={material} className="flex items-center gap-2">
+                            <Checkbox id={material} />
+                            <Label
+                              htmlFor={material}
+                              className="text-sm cursor-pointer hover:text-[#D4AF37] transition-colors"
+                            >
+                              {material}
+                            </Label>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
               </aside>
 
               {/* Product Grid */}
               <div className="lg:col-span-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {products.map((product) => (
-                    <div
+                    <Card
                       key={product.id}
-                      className="group relative bg-card overflow-hidden transition-all hover:shadow-xl cursor-pointer"
+                      className="group relative overflow-hidden transition-all hover:shadow-xl cursor-pointer border-0"
                     >
                       {/* Product Image */}
                       <div className="relative aspect-[3/4] overflow-hidden bg-muted">
@@ -324,15 +351,15 @@ export default function SingleCategory() {
                       </div>
 
                       {/* Product Info */}
-                      <div className="p-4">
+                      <CardContent className="p-4">
                         <h3 className="mb-2 group-hover:text-[#D4AF37] transition-colors">
                           {product.name}
                         </h3>
                         <p className="text-[#D4AF37]">
                           ${product.price.toLocaleString()}
                         </p>
-                      </div>
-                    </div>
+                      </CardContent>
+                    </Card>
                   ))}
                 </div>
 
@@ -368,6 +395,7 @@ export default function SingleCategory() {
           </div>
         </section>
       </div>
+
     </div>
   );
 }

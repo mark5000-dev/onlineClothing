@@ -1,5 +1,7 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
+import { Check } from "lucide-react";
 
 export function FeaturedCollection() {
   return (
@@ -14,9 +16,9 @@ export function FeaturedCollection() {
                 alt="Featured Collection"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute top-6 left-6 bg-[#D4AF37] text-black px-6 py-2">
+              <Badge className="absolute top-6 left-6 bg-[#D4AF37] text-black hover:bg-[#C5A028] px-6 py-2">
                 New Arrivals
-              </div>
+              </Badge>
             </div>
           </div>
 
@@ -35,21 +37,27 @@ export function FeaturedCollection() {
               
               <div className="space-y-4 mb-8">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#D4AF37] rounded-full mt-2" />
+                  <Badge variant="outline" className="rounded-full w-6 h-6 p-0 flex items-center justify-center border-[#D4AF37]">
+                    <Check className="w-3 h-3 text-[#D4AF37]" />
+                  </Badge>
                   <div>
                     <p className="mb-1">Premium Materials</p>
                     <p className="text-sm text-muted-foreground">Sourced from the world's finest manufacturers</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#D4AF37] rounded-full mt-2" />
+                  <Badge variant="outline" className="rounded-full w-6 h-6 p-0 flex items-center justify-center border-[#D4AF37]">
+                    <Check className="w-3 h-3 text-[#D4AF37]" />
+                  </Badge>
                   <div>
                     <p className="mb-1">Expert Craftsmanship</p>
                     <p className="text-sm text-muted-foreground">Each piece made with attention to detail</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#D4AF37] rounded-full mt-2" />
+                  <Badge variant="outline" className="rounded-full w-6 h-6 p-0 flex items-center justify-center border-[#D4AF37]">
+                    <Check className="w-3 h-3 text-[#D4AF37]" />
+                  </Badge>
                   <div>
                     <p className="mb-1">Timeless Design</p>
                     <p className="text-sm text-muted-foreground">Styles that transcend seasonal trends</p>

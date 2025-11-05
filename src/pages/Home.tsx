@@ -5,6 +5,7 @@ import { CategoryShowcase } from "../components/CategoryShowcase";
 import { ProductGrid } from "../components/ProductGrid";
 import { Newsletter } from "../components/Newsletter";
 
+
 import type { FC } from "react";
 
 
