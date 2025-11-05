@@ -6,6 +6,7 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { Separator } from "./ui/separator";
 import { useState } from "react";
 import { Cart } from "./Cart";
+import { Link } from "react-router-dom";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,28 +17,30 @@ export function Header() {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
+          <Link to="/">
           <div className="flex-shrink-0">
             <h1 className="font-serif text-[2rem] tracking-tight">
               <span className="text-foreground">LUX</span>
               <span className="text-[#D4AF37]">É</span>
             </h1>
           </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            <a href="/category/new" className="text-foreground hover:text-[#D4AF37] transition-colors">
               New Arrivals
             </a>
-            <a href="#" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            <a href="/category/women" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Women
             </a>
-            <a href="#" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            <a href="/category/men" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Men
             </a>
-            <a href="#" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            <a href="/categories" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Collections
             </a>
-            <a href="#" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            <a href="/about" className="text-foreground hover:text-[#D4AF37] transition-colors">
               About
             </a>
           </nav>
@@ -47,9 +50,11 @@ export function Header() {
             <Button variant="ghost" size="icon" className="hidden sm:inline-flex">
               <Search className="h-5 w-5" />
             </Button>
+            <Link to={"/profile"}>
             <Button variant="ghost" size="icon" className="hidden sm:inline-flex">
               <User className="h-5 w-5" />
             </Button>
+            </Link>
             <Button 
               variant="ghost" 
               size="icon" 

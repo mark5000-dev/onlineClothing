@@ -1,5 +1,4 @@
 import { Header } from "./components/Header";
-
 import {lazy, Suspense} from "react";
 import { Footer } from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
@@ -11,6 +10,7 @@ const Cart = lazy(() => import('./pages/Cart'));
 const Category = lazy(() => import('./pages/Categories'));
 const SingleCategory = lazy(() => import('./pages/SingleCategory'));
 const Products = lazy(() => import('./pages/Products'));
+const Profile = lazy(()=> import('./pages/Profile'));
 
 
 
@@ -27,6 +27,7 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/categories" element={<Category />} />
             <Route path="/category/:categoryName" element={<SingleCategory />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </Suspense>
       <Footer />

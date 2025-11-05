@@ -4,6 +4,7 @@ import { Heart } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import { Link } from "react-router-dom";
 
 const products = [
   {
@@ -57,6 +58,7 @@ export function ProductGrid() {
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product) => (
+            <Link to={`/product/${product.id}`}>
             <Card
               key={product.id}
               className="group relative overflow-hidden transition-all hover:shadow-xl border-0"
@@ -111,11 +113,13 @@ export function ProductGrid() {
                 </p>
               </CardContent>
             </Card>
+            </Link>
           ))}
         </div>
 
         {/* View All Button */}
         <div className="text-center mt-12">
+          <Link to="/products">
           <Button
             size="lg"
             variant="outline"
@@ -123,6 +127,7 @@ export function ProductGrid() {
           >
             View All Products
           </Button>
+          </Link>
         </div>
       </div>
     </section>

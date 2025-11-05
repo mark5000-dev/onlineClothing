@@ -1,7 +1,7 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Card } from "./ui/card";
 import { ArrowRight } from "lucide-react";
-
+import { Link } from "react-router-dom";
 const categories = [
   {
     name: "Women's Collection",
@@ -37,6 +37,7 @@ export function CategoryShowcase() {
         {/* Category Grid */}
         <div className="grid md:grid-cols-3 gap-8">
           {categories.map((category, index) => (
+            <Link to={`/category/${category.name}`}>
             <Card
               key={index}
               className="group relative overflow-hidden cursor-pointer border-0"
@@ -64,6 +65,7 @@ export function CategoryShowcase() {
                 </span>
               </div>
             </Card>
+            </Link>
           ))}
         </div>
       </div>

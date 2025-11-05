@@ -62,7 +62,7 @@ export function Cart({ open, onOpenChange }: CartProps) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-lg flex flex-col p-0">
+      <SheetContent side="right" className="w-full sm:max-w-lg flex flex-col p-0 bg-[#f9f7f1]">
         <SheetHeader className="px-6 pt-6 pb-4">
           <SheetTitle className="flex items-center gap-2">
             <ShoppingBag className="h-5 w-5" />

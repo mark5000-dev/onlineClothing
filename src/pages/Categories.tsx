@@ -6,6 +6,8 @@ import { Badge } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
 import { Separator } from "../components/ui/separator";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+
 
 const categories = [
   {
@@ -78,6 +80,7 @@ export default function Categories() {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {categories.map((category) => (
+                <Link to={`/category/${category.name}`}>
                 <Card
                   key={category.id}
                   className="group relative overflow-hidden border-0 transition-all duration-500 hover:shadow-2xl cursor-pointer"
@@ -118,6 +121,7 @@ export default function Categories() {
                     {category.itemCount}+ Items
                   </Badge>
                 </Card>
+                </Link>
               ))}
             </div>
           </div>

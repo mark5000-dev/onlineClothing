@@ -1,11 +1,15 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { Check } from "lucide-react";
+import { Check} from "lucide-react";
+import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function FeaturedCollection() {
+  const navigate = useNavigate();
+
   return (
-    <section className="py-20 bg-card">
+    <section className="FC py-20 bg-card">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Image Side */}
@@ -16,9 +20,11 @@ export function FeaturedCollection() {
                 alt="Featured Collection"
                 className="w-full h-full object-cover"
               />
+              <Link to={"/category/new-arrivals"}>
               <Badge className="absolute top-6 left-6 bg-[#D4AF37] text-black hover:bg-[#C5A028] px-6 py-2">
                 New Arrivals
               </Badge>
+              </Link>
             </div>
           </div>
 
@@ -65,7 +71,7 @@ export function FeaturedCollection() {
                 </div>
               </div>
 
-              <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90 px-8">
+              <Button onClick={() => {navigate("/about")}} size="lg" className="bg-foreground text-background hover:bg-foreground/90 px-8">
                 Discover More
               </Button>
             </div>

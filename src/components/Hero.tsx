@@ -1,6 +1,7 @@
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { Link } from "react-router-dom";
 
 export function Hero() {
   return (
@@ -18,12 +19,13 @@ export function Hero() {
       {/* Content */}
       <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-center">
         <div className="max-w-2xl">
+          <Link to={"/category/winter"}>
           <div className="inline-block mb-6">
             <span className="px-4 py-2 bg-[#D4AF37]/10 border border-[#D4AF37] text-[#D4AF37] backdrop-blur-sm">
               Winter 2025 Collection
             </span>
           </div>
-          
+          </Link>
           <h1 className="font-serif text-white text-[3.5rem] md:text-[5rem] lg:text-[6rem] leading-[1.1] mb-6">
             Timeless
             <br />
@@ -35,13 +37,16 @@ export function Hero() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
+            <Link to={"/categories"}>
             <Button 
               size="lg" 
               className="bg-[#D4AF37] text-black hover:bg-[#C5A028] transition-all px-8 py-6"
             >
-              Shop Collection
+              Shop Collections
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
+            </Link>
+            <Link to={"/products"}>
             <Button 
               size="lg" 
               variant="outline" 
@@ -49,6 +54,7 @@ export function Hero() {
             >
               Explore Lookbook
             </Button>
+            </Link>
           </div>
         </div>
       </div>
