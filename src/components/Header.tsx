@@ -2,15 +2,19 @@ import { ShoppingBag, Search, User, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "./ui/navigation-menu";
+// import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "./ui/navigation-menu";
 import { Separator } from "./ui/separator";
 import { useState } from "react";
 import { Cart } from "./Cart";
 import { Link } from "react-router-dom";
+import { togglecart } from "../redux/features/cartSlice";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 
 export function Header() {
+  const dipatch = useAppDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
+  const numberOfItems = useAppSelector((state) => state.cart.cartItems.length);
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
@@ -59,11 +63,11 @@ export function Header() {
               variant="ghost" 
               size="icon" 
               className="relative"
-              onClick={() => setIsCartOpen(true)}
+              onClick={() => dipatch(togglecart(!isCartOpen))}
             >
               <ShoppingBag className="h-5 w-5" />
               <Badge className="absolute -top-1 -right-1 bg-[#D4AF37] text-black hover:bg-[#C5A028] h-5 w-5 flex items-center justify-center p-0 text-xs rounded-full">
-                2
+                {numberOfItems}
               </Badge>
             </Button>
             
@@ -106,7 +110,7 @@ export function Header() {
       </div>
       
       {/* Cart Drawer */}
-      <Cart open={isCartOpen} onOpenChange={setIsCartOpen} />
+      <Cart />
     </header>
   );
 }

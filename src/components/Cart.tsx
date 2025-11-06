@@ -8,53 +8,27 @@ import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 import { X, Minus, Plus, ShoppingBag, Truck } from "lucide-react";
 
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-  size?: string;
-  color?: string;
-}
+import { addToCart, removeFromCart, reduceFromCart, togglecart, clearCart } from "../redux/features/cartSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {type CartItem } from "../models/cart";
 
-interface CartProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}
 
-const cartItems: CartItem[] = [
-  {
-    id: 1,
-    name: "Cashmere Overcoat",
-    price: 2899,
-    image: "https://images.unsplash.com/photo-1567777301743-3b7ef158aadf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBmYXNoaW9uJTIwbW9kZWx8ZW58MXx8fHwxNzYyMzIxNDI1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    quantity: 1,
-    size: "M",
-    color: "Black",
-  },
-  {
-    id: 2,
-    name: "Swiss Luxury Watch",
-    price: 8999,
-    image: "https://images.unsplash.com/photo-1670177257750-9b47927f68eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB3YXRjaHxlbnwxfHx8fDE3NjIzMTg1NzR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    quantity: 1,
-  },
-];
 
-export function Cart({ open, onOpenChange }: CartProps) {
-  const [items, setItems] = useState<CartItem[]>(cartItems);
+export function Cart() {
+  const dispatch = useAppDispatch();
+  const open = useAppSelector((state) => state.cart.isCartOpen);
+  const items = useAppSelector((state) => state.cart.cartItems);
 
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    setItems(items.map(item => 
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    ));
+  const onOpenChange = (open: boolean) => {
+    dispatch(togglecart(open));
   };
 
-  const removeItem = (id: number) => {
-    setItems(items.filter(item => item.id !== id));
+  const updateQuantity = (id: number, quantity: number) => {
+    if (quantity < 1) return;
+    dispatch({ type: 'cart/updateQuantity', payload: { id, quantity } });
   };
+
+  
 
   const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const shipping = subtotal > 500 ? 0 : 50;
@@ -115,7 +89,7 @@ export function Cart({ open, onOpenChange }: CartProps) {
                           variant="ghost"
                           size="icon"
                           className="h-6 w-6 flex-shrink-0"
-                          onClick={() => removeItem(item.id)}
+                          onClick={() => dispatch(removeFromCart(item.id))}
                         >
                           <X className="h-4 w-4" />
                         </Button>
@@ -127,7 +101,7 @@ export function Cart({ open, onOpenChange }: CartProps) {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            onClick={() => dispatch(reduceFromCart(item.id))}
                           >
                             <Minus className="h-3 w-3" />
                           </Button>
@@ -142,7 +116,7 @@ export function Cart({ open, onOpenChange }: CartProps) {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() => dispatch(addToCart(item))}
                           >
                             <Plus className="h-3 w-3" />
                           </Button>
