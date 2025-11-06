@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { Link } from "react-router-dom";
 
 export function Hero() {

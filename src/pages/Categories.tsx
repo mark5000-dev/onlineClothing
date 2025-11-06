@@ -1,12 +1,6 @@
-import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
-import { Badge } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
-import { Separator } from "../components/ui/separator";
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { type Category,CategoryCard } from "../components/CategoryCard";
 
 
 const categories = [
@@ -79,49 +73,9 @@ export default function Categories() {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {categories.map((category) => (
-                <Link to={`/category/${category.name}`}>
-                <Card
-                  key={category.id}
-                  className="group relative overflow-hidden border-0 transition-all duration-500 hover:shadow-2xl cursor-pointer"
-                >
-                  {/* Image */}
-                  <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-                    <ImageWithFallback
-                      src={category.image}
-                      alt={category.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-
-                  {/* Content Overlay */}
-                  <CardContent className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    <div className="mb-2">
-                      <CardTitle className="font-serif text-[1.75rem] mb-2 text-white">
-                        {category.name}
-                      </CardTitle>
-                      <CardDescription className="text-white/90 text-sm mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                        {category.description}
-                      </CardDescription>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-white/80">
-                        {category.itemCount} items
-                      </span>
-                      <div className="flex items-center gap-2 text-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
-                        <span className="text-sm">Explore</span>
-                        <ArrowRight className="h-4 w-4" />
-                      </div>
-                    </div>
-                  </CardContent>
-
-                  {/* Top Badge */}
-                  <Badge className="absolute top-6 right-6 bg-[#D4AF37] text-black px-4 py-2 text-sm transform translate-x-full group-hover:translate-x-0 transition-transform duration-300 hover:bg-[#C5A028]">
-                    {category.itemCount}+ Items
-                  </Badge>
-                </Card>
-                </Link>
+              {categories.map((category: Category) => (
+                <CategoryCard key={category.id} category={category} />
+                
               ))}
             </div>
           </div>

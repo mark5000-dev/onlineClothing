@@ -13,7 +13,6 @@ const Products = lazy(() => import('./pages/Products'));
 const Profile = lazy(()=> import('./pages/Profile'));
 
 
-
 export default function App() {
   return (
     <div className="min-h-screen">

@@ -1,9 +1,8 @@
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Check} from "lucide-react";
-import { Link, Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function FeaturedCollection() {
   const navigate = useNavigate();

@@ -1,0 +1,67 @@
+import { Card, CardContent } from "./ui/card";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Heart } from "lucide-react";
+import { ImageWithFallback } from "./ui/ImageWithFallback";
+import { Link } from "react-router-dom";
+import { type Product } from "../models/types";
+
+export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+    return (
+        <>
+        <Link to={`/product/${product.id}`}>
+        <Card
+                key={product.id}
+                className="group relative overflow-hidden transition-all hover:shadow-xl cursor-pointer border-0"
+            >
+                {/* Product Image */}
+                <div className="relative aspect-[3/4] overflow-hidden bg-muted">
+                <ImageWithFallback
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+
+                {/* Badges */}
+                <div className="absolute top-4 left-4 flex flex-col gap-2">
+                    {product.isNew && (
+                    <Badge className="bg-[#D4AF37] text-black hover:bg-[#C5A028]">
+                        New
+                    </Badge>
+                    )}
+                    {product.isBestseller && (
+                    <Badge variant="secondary">Bestseller</Badge>
+                    )}
+                </div>
+
+                {/* Wishlist Button */}
+                <Button
+                    size="icon"
+                    variant="ghost"
+                    className="absolute top-4 right-4 bg-white/90 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                    <Heart className="h-5 w-5" />
+                </Button>
+
+                {/* Quick View */}
+                <div className="absolute bottom-0 left-0 right-0 bg-foreground text-background p-4 translate-y-full group-hover:translate-y-0 transition-transform">
+                    <Button className="w-full bg-[#D4AF37] text-black hover:bg-[#C5A028]">
+                    Quick View
+                    </Button>
+                </div>
+                </div>
+
+                {/* Product Info */}
+                <CardContent className="p-4">
+                <h3 className="mb-2 group-hover:text-[#D4AF37] transition-colors">
+                    {product.name}
+                </h3>
+                <p className="text-[#D4AF37]">
+                    ${product.price.toLocaleString()}
+                </p>
+                </CardContent>
+            </Card>
+        </Link>
+        </>
+    )
+}
