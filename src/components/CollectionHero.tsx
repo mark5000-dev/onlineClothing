@@ -30,13 +30,13 @@ export const CollectionHero: React.FC<CollectionHeroProps> = ({imageUrl,collecti
         <Breadcrumb className="mb-4">
           <BreadcrumbList className="text-white/80">
             <BreadcrumbItem>
-              <BreadcrumbLink href="#" className="hover:text-[#D4AF37] transition-colors">
+              <BreadcrumbLink href="/" className="hover:text-[#D4AF37] transition-colors">
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator className="text-white/60" />
             <BreadcrumbItem>
-              <BreadcrumbLink href="#" className="hover:text-[#D4AF37] transition-colors">
+              <BreadcrumbLink href="/categories" className="hover:text-[#D4AF37] transition-colors">
                 Categories
               </BreadcrumbLink>
             </BreadcrumbItem>

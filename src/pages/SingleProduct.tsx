@@ -107,13 +107,13 @@ export default function SingleProduct() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="#" className="hover:text-[#D4AF37] transition-colors">
+                  <BreadcrumbLink href="/" className="hover:text-[#D4AF37] transition-colors">
                     Home
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="#" className="hover:text-[#D4AF37] transition-colors">
+                  <BreadcrumbLink href="/products" className="hover:text-[#D4AF37] transition-colors">
                     Products
                   </BreadcrumbLink>
                 </BreadcrumbItem>

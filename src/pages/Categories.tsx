@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import { type Category,CategoryCard } from "../components/CategoryCard";
-
+import {CategoryCard } from "../components/CategoryCard";
+import type { Category } from "../models/types";
 
 const categories = [
   {
