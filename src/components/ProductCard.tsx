@@ -4,9 +4,31 @@ import { Button } from "./ui/button";
 import { Heart } from "lucide-react";
 import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { Link } from "react-router-dom";
-import { type Product } from "../models/types";
+import type { Product } from "../model";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { toggleWishlist } from "../redux/features/wishlistSlice";
+import React from "react";
 
 export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+    const dispatch = useAppDispatch();
+    const wishlistItems = useAppSelector(state => state.wishlist.items);
+    const isInWishlist = wishlistItems.some(item => item.productId === product.id);
+
+    const handleToggleWishlist = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        dispatch(toggleWishlist({
+            id: Date.now(),
+            productId: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            inStock: product.inStock ?? true,
+            addedAt: new Date().toISOString(),
+        }));
+    };
+
     return (
         <>
         <Link to={`/product/${product.id}`}>
@@ -38,9 +60,12 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
                 <Button
                     size="icon"
                     variant="ghost"
-                    className="absolute top-4 right-4 bg-white/90 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity"
+                    className={`absolute top-4 right-4 bg-white/90 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity ${
+                        isInWishlist ? 'text-red-500' : ''
+                    }`}
+                    onClick={handleToggleWishlist}
                 >
-                    <Heart className="h-5 w-5" />
+                    <Heart className={`h-5 w-5 ${isInWishlist ? 'fill-current' : ''}`} />
                 </Button>
 
                 {/* Quick View */}

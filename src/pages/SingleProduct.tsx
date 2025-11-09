@@ -13,9 +13,10 @@ import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
 //import { Avatar, AvatarFallback } from "../components/ui/avatar";
 //import { Progress } from "../components/ui/progress";
 import { Heart, Star, Truck, RotateCcw, Shield, Minus, Plus, Share2 } from "lucide-react";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addToCart, removeFromCart } from "../redux/features/cartSlice";
-import Loading from "../components/loading";
+import { toggleWishlist } from "../redux/features/wishlistSlice";
+import type { CartItem } from "../model";
 
 // Mocked product fetch (pretend this is an API call)
 const fetchProduct = async (id: number) => {
@@ -57,6 +58,10 @@ export default function SingleProduct() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("M");
+  
+  // Check if product is in wishlist
+  const wishlistItems = useAppSelector(state => state.wishlist.items);
+  const isInWishlist = product ? wishlistItems.some(item => item.productId === product.id) : false;
 
   // simulate product fetch
   useEffect(() => {
@@ -68,7 +73,9 @@ export default function SingleProduct() {
 
   if (loading || !product) {
     return (
-      <Loading />
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">Loading product...</p>
+      </div>
     );
   }
 
@@ -95,6 +102,20 @@ export default function SingleProduct() {
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);
+  };
+
+  const handleToggleWishlist = () => {
+    if (!product) return;
+    
+    dispatch(toggleWishlist({
+      id: Date.now(), // Generate a unique ID for the wishlist item
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0],
+      inStock: product.stock > 0,
+      addedAt: new Date().toISOString(),
+    }));
   };
 
   return (
@@ -144,9 +165,12 @@ export default function SingleProduct() {
                     <Button
                       size="icon"
                       variant="ghost"
-                      className="absolute top-6 right-6 bg-white/90 hover:bg-white"
+                      className={`absolute top-6 right-6 bg-white/90 hover:bg-white ${
+                        isInWishlist ? 'text-red-500' : ''
+                      }`}
+                      onClick={handleToggleWishlist}
                     >
-                      <Heart className="h-5 w-5" />
+                      <Heart className={`h-5 w-5 ${isInWishlist ? 'fill-current' : ''}`} />
                     </Button>
                   </div>
                 </Card>

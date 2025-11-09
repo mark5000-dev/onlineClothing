@@ -11,6 +11,7 @@ const Category = lazy(() => import('./pages/Categories'));
 const SingleCategory = lazy(() => import('./pages/SingleCategory'));
 const Products = lazy(() => import('./pages/Products'));
 const Profile = lazy(()=> import('./pages/Profile'));
+const Wishlist = lazy(() => import('./pages/Wishlist'));
 
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/product/:id" element={<SingleProduct />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/about" element={<About />} />
             <Route path="/categories" element={<Category />} />
             <Route path="/category/:categoryName" element={<SingleCategory />} />

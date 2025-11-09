@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "./ui/sheet";
@@ -7,36 +6,30 @@ import { Badge } from "./ui/badge";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 import { X, Minus, Plus, ShoppingBag, Truck } from "lucide-react";
-
-import { addToCart, removeFromCart, reduceFromCart, togglecart, clearCart } from "../redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import {type CartItem } from "../models/cart";
+import { removeFromCart, updateQuantity as updateCartQuantity } from "../redux/features/cartSlice";
 
+interface CartProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
 
-
-export function Cart() {
+export function Cart({ open, onOpenChange }: CartProps) {
   const dispatch = useAppDispatch();
-  const open = useAppSelector((state) => state.cart.isCartOpen);
-  const items = useAppSelector((state) => state.cart.cartItems);
+  const { items, subtotal, shipping, total } = useAppSelector(state => state.cart);
 
-  const onOpenChange = (open: boolean) => {
-    dispatch(togglecart(open));
+  const handleUpdateQuantity = (id: number, newQuantity: number) => {
+    if (newQuantity < 1) return;
+    dispatch(updateCartQuantity({ id, quantity: newQuantity }));
   };
 
-  const updateQuantity = (id: number, quantity: number) => {
-    if (quantity < 1) return;
-    dispatch({ type: 'cart/updateQuantity', payload: { id, quantity } });
+  const handleRemoveItem = (id: number) => {
+    dispatch(removeFromCart(id));
   };
-
-  
-
-  const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shipping = subtotal > 500 ? 0 : 50;
-  const total = subtotal + shipping;
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-lg flex flex-col p-0 bg-[#f9f7f1]">
+      <SheetContent side="right" className="w-full sm:max-w-lg flex flex-col p-0">
         <SheetHeader className="px-6 pt-6 pb-4">
           <SheetTitle className="flex items-center gap-2">
             <ShoppingBag className="h-5 w-5" />
@@ -89,7 +82,7 @@ export function Cart() {
                           variant="ghost"
                           size="icon"
                           className="h-6 w-6 flex-shrink-0"
-                          onClick={() => dispatch(removeFromCart(item.id))}
+                          onClick={() => handleRemoveItem(item.id)}
                         >
                           <X className="h-4 w-4" />
                         </Button>
@@ -101,14 +94,14 @@ export function Cart() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            onClick={() => dispatch(reduceFromCart(item.id))}
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
                           >
                             <Minus className="h-3 w-3" />
                           </Button>
                           <Input
                             type="number"
                             value={item.quantity}
-                            onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 1)}
+                            onChange={(e) => handleUpdateQuantity(item.id, parseInt(e.target.value) || 1)}
                             className="w-12 h-8 text-center border-0 border-x border-border p-0"
                             min={1}
                           />
@@ -116,7 +109,7 @@ export function Cart() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            onClick={() => dispatch(addToCart(item))}
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
                           >
                             <Plus className="h-3 w-3" />
                           </Button>

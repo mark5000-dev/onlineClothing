@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 import { ImageWithFallback } from "../components/ui/ImageWithFallback";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
 import { Button } from "../components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
@@ -127,6 +127,9 @@ export default function Profile() {
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [smsNotifications, setSmsNotifications] = useState(false);
   const [promotions, setPromotions] = useState(true);
+  
+  // Get wishlist items from Redux
+  const wishlistItems = useAppSelector(state => state.wishlist.items);
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -426,46 +429,79 @@ export default function Profile() {
 
               {/* Wishlist Tab */}
               <TabsContent value="wishlist" className="space-y-6">
-                <div>
-                  <h2 className="mb-2">My Wishlist</h2>
-                  <p className="text-muted-foreground">Items you've saved for later</p>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h2 className="mb-2">My Wishlist</h2>
+                    <p className="text-muted-foreground">
+                      {wishlistItems.length} {wishlistItems.length === 1 ? 'item' : 'items'} saved for later
+                    </p>
+                  </div>
+                  <Button asChild className="bg-[#D4AF37] text-black hover:bg-[#C5A028]">
+                    <Link to="/wishlist">
+                      <Heart className="h-4 w-4 mr-2" />
+                      View Full Wishlist
+                    </Link>
+                  </Button>
                 </div>
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {wishlistItems.map((item) => (
-                    <Card key={item.id} className="group overflow-hidden border-border">
-                      <div className="relative aspect-[3/4] bg-muted overflow-hidden">
-                        <ImageWithFallback
-                          src={item.image}
-                          alt={item.name}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        {!item.inStock && (
-                          <Badge className="absolute top-4 left-4 bg-red-500 hover:bg-red-600">
-                            Out of Stock
-                          </Badge>
-                        )}
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="absolute top-4 right-4 bg-white/90 hover:bg-white"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="mb-2">{item.name}</h3>
-                        <p className="text-[#D4AF37] mb-4">${item.price.toLocaleString()}</p>
-                        <Button 
-                          className="w-full bg-[#D4AF37] text-black hover:bg-[#C5A028]"
-                          disabled={!item.inStock}
-                        >
-                          {item.inStock ? "Add to Cart" : "Notify When Available"}
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+                {wishlistItems.length === 0 ? (
+                  <Card className="text-center py-16 border-border">
+                    <CardContent>
+                      <Heart className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                      <h3 className="mb-2">Your wishlist is empty</h3>
+                      <p className="text-muted-foreground mb-8">
+                        Start adding items you love to your wishlist
+                      </p>
+                      <Button asChild className="bg-[#D4AF37] text-black hover:bg-[#C5A028]">
+                        <Link to="/products">
+                          Explore Products
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {wishlistItems.slice(0, 6).map((item) => (
+                      <Card key={item.id} className="group overflow-hidden border-border">
+                        <Link to={`/product/${item.productId}`}>
+                          <div className="relative aspect-[3/4] bg-muted overflow-hidden">
+                            <ImageWithFallback
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                            {!item.inStock && (
+                              <Badge className="absolute top-4 left-4 bg-red-500 hover:bg-red-600">
+                                Out of Stock
+                              </Badge>
+                            )}
+                          </div>
+                        </Link>
+                        <CardContent className="p-4">
+                          <Link to={`/product/${item.productId}`}>
+                            <h3 className="mb-2 hover:text-[#D4AF37] transition-colors">{item.name}</h3>
+                          </Link>
+                          <p className="text-[#D4AF37] mb-4">${item.price.toLocaleString()}</p>
+                          <Button 
+                            className="w-full bg-[#D4AF37] text-black hover:bg-[#C5A028]"
+                            disabled={!item.inStock}
+                          >
+                            {item.inStock ? "Add to Cart" : "Out of Stock"}
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+                {wishlistItems.length > 6 && (
+                  <div className="text-center pt-4">
+                    <Button asChild variant="outline">
+                      <Link to="/wishlist">
+                        View All {wishlistItems.length} Items
+                      </Link>
+                    </Button>
+                  </div>
+                )}
               </TabsContent>
 
               {/* Addresses Tab */}

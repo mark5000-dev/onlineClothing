@@ -1,5 +1,5 @@
 import { ProductCard } from "../components/ProductCard";
-import { type Product } from "../models/types";
+import { type Product } from "../model/types";
 import { Button } from "../components/ui/button";
 
 interface ProductGridProps {

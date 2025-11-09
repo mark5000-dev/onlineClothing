@@ -1,10 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cartReducer from './features/cartSlice';
+import wishlistReducer from './features/wishlistSlice';
+import productsReducer from './features/productsSlice';
+import userReducer from './features/userSlice';
+import ordersReducer from './features/ordersSlice';
+import categoriesReducer from './features/categoriesSlice';
 
 export const store = configureStore({
-    reducer: {
-        cart: cartReducer,
-    },
+  reducer: {
+    cart: cartReducer,
+    wishlist: wishlistReducer,
+    products: productsReducer,
+    user: userReducer,
+    orders: ordersReducer,
+    categories: categoriesReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

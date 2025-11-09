@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardTitle } from "./ui/card";
 import { ArrowRight } from "lucide-react";
 import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { Link } from "react-router-dom";
-import { type Category } from "../models/types";
+import type { Category } from "../model";
 
 export const CategoryCard: React.FC<{category :Category}> = ({category}) => {
     return (
@@ -34,9 +34,11 @@ export const CategoryCard: React.FC<{category :Category}> = ({category}) => {
                   <ArrowRight className="w-4 h-4" />
                 </span>
                 <br />
-                <span className="text-sm text-white/80">
-                  {category.itemCount} items
-                </span>
+                {category.productCount && (
+                  <span className="text-sm text-white/80">
+                    {category.productCount} items
+                  </span>
+                )}
               </CardContent>
             </Card>
             </Link>

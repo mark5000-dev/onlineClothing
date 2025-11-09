@@ -1,21 +1,13 @@
 import { useState } from "react";
-import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
-import { ImageWithFallback } from "../components/ui/ImageWithFallback";
-import { Badge } from "../components/ui/badge";
-import { Button } from "../components/ui/button";
-import { Card, CardContent } from "../components/ui/card";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../components/ui/breadcrumb";
-import { Separator } from "../components/ui/separator";
-import { Label } from "../components/ui/label";
-import { Tabs, TabsList, TabsTrigger } from "../components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
-import { Checkbox } from "../components/ui/checkbox";
-import { Slider } from "../components/ui/slider";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../components/ui/sheet";
-import { Heart, SlidersHorizontal, Grid3x3, List, Star } from "lucide-react";
+import { PageHero } from "../components/PageHero";
+import { ItemsToolbar } from "../components/ItemsToolbar";
+import { ItemsFilter } from "../components/ItemsFilter";
+import { ItemsGrid } from "../components/ItemsGrid";
+import { ProductCard } from "../components/ProductCard";
+import { Star } from "lucide-react";
+import type { Product } from "../model";
 
-const products = [
+const products: Product[] = [
   {
     id: 1,
     name: "Cashmere Overcoat",
@@ -108,316 +100,111 @@ const products = [
   },
 ];
 
+const filterSections = [
+  {
+    id: "price",
+    title: "Price Range",
+    type: "slider" as const,
+    min: 0,
+    max: 10000,
+    step: 100,
+    value: [0, 10000],
+  },
+  {
+    id: "category",
+    title: "Category",
+    type: "checkbox" as const,
+    options: [
+      { id: "all", label: "All" },
+      { id: "outerwear", label: "Outerwear" },
+      { id: "accessories", label: "Accessories" },
+      { id: "jewelry", label: "Jewelry" },
+      { id: "beauty", label: "Beauty" },
+    ],
+  },
+  {
+    id: "rating",
+    title: "Minimum Rating",
+    type: "checkbox" as const,
+    options: [
+      { id: "5stars", label: "5+ Stars" },
+      { id: "4stars", label: "4+ Stars" },
+      { id: "3stars", label: "3+ Stars" },
+    ],
+  },
+];
+
 export default function Products() {
+  const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [priceRange, setPriceRange] = useState([0, 10000]);
+
+  const handleFilterChange = (sectionId: string, value: any) => {
+    console.log("Filter changed:", sectionId, value);
+    // Implement filter logic here
+  };
+
+  const handleSortChange = (value: string) => {
+    console.log("Sort changed:", value);
+    // Implement sort logic here
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
-
       <div className="flex-1">
-        {/* Breadcrumb */}
-        <section className="bg-card border-b border-border">
-          <div className="container mx-auto px-4 lg:px-8 py-4">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="#" className="hover:text-[#D4AF37] transition-colors">
-                    Home
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>All Products</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-        </section>
-
-        {/* Header Section */}
-        <section className="bg-background py-12">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-3xl">
-              <Badge className="bg-[#D4AF37] text-black hover:bg-[#C5A028] mb-4">
-                Luxury Collection
-              </Badge>
-              <h1 className="font-serif text-[3rem] md:text-[4rem] mb-4">
-                All Products
-              </h1>
-              <p className="text-muted-foreground text-lg">
-                Explore our complete collection of luxury fashion and accessories, 
-                carefully curated for the discerning individual.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Page Hero */}
+        <PageHero
+          title="All Products"
+          description="Explore our complete collection of luxury fashion and accessories, carefully curated for the discerning individual."
+          breadcrumbs={[{ label: "All Products" }]}
+          badge={{
+            label: "Luxury Collection",
+          }}
+          showGradient={false}
+        />
 
         {/* Main Content */}
         <section className="py-12 bg-card">
           <div className="container mx-auto px-4 lg:px-8">
             {/* Toolbar */}
-            <Card className="mb-8 border-border">
-              <CardContent className="p-4">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                  <div className="flex items-center gap-4">
-                    <Sheet>
-                      <SheetTrigger asChild>
-                        <Button variant="outline" className="gap-2">
-                          <SlidersHorizontal className="h-4 w-4" />
-                          Filters
-                        </Button>
-                      </SheetTrigger>
-                      <SheetContent side="left" className="w-[300px] sm:w-[400px] overflow-y-auto">
-                        <SheetHeader>
-                          <SheetTitle>Filter Products</SheetTitle>
-                        </SheetHeader>
-                        <Separator className="my-4" />
-                        
-                        {/* Filters Content */}
-                        <div className="space-y-6">
-                          {/* Price Range */}
-                          <div>
-                            <Label className="mb-4 block">Price Range</Label>
-                            <Slider
-                              value={priceRange}
-                              onValueChange={setPriceRange}
-                              max={10000}
-                              step={100}
-                              className="mb-4"
-                            />
-                            <div className="flex justify-between text-sm text-muted-foreground">
-                              <span>${priceRange[0]}</span>
-                              <span>${priceRange[1]}</span>
-                            </div>
-                          </div>
-                          
-                          <Separator />
-                          
-                          {/* Category */}
-                          <div>
-                            <Label className="mb-4 block">Category</Label>
-                            <div className="space-y-3">
-                              {["All", "Outerwear", "Accessories", "Jewelry", "Beauty"].map((cat) => (
-                                <div key={cat} className="flex items-center gap-2">
-                                  <Checkbox id={cat} />
-                                  <Label htmlFor={cat} className="text-sm cursor-pointer">
-                                    {cat}
-                                  </Label>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                          
-                          <Separator />
-                          
-                          {/* Rating */}
-                          <div>
-                            <Label className="mb-4 block">Minimum Rating</Label>
-                            <div className="space-y-3">
-                              {[5, 4, 3].map((rating) => (
-                                <div key={rating} className="flex items-center gap-2">
-                                  <Checkbox id={`rating-${rating}`} />
-                                  <Label htmlFor={`rating-${rating}`} className="text-sm cursor-pointer flex items-center gap-1">
-                                    <Star className="h-3 w-3 fill-[#D4AF37] text-[#D4AF37]" />
-                                    {rating}+ Stars
-                                  </Label>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </SheetContent>
-                    </Sheet>
-                    
-                    <p className="text-sm text-muted-foreground">
-                      {products.length} products
-                    </p>
-                  </div>
+            <ItemsToolbar
+              showFilters={showFilters}
+              onToggleFilters={() => setShowFilters(!showFilters)}
+              totalItems={products.length}
+              itemLabel="products"
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
+              onSortChange={handleSortChange}
+            />
 
-                  <div className="flex items-center gap-4">
-                    <Select defaultValue="featured">
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Sort by" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="featured">Featured</SelectItem>
-                        <SelectItem value="newest">Newest First</SelectItem>
-                        <SelectItem value="price-low">Price: Low to High</SelectItem>
-                        <SelectItem value="price-high">Price: High to Low</SelectItem>
-                        <SelectItem value="rating">Highest Rated</SelectItem>
-                      </SelectContent>
-                    </Select>
+            <div className="grid lg:grid-cols-4 gap-8 mt-8">
+              {/* Filters Sidebar */}
+              <ItemsFilter
+                show={showFilters}
+                sections={filterSections}
+                onFilterChange={handleFilterChange}
+              />
 
-                    <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as "grid" | "list")}>
-                      <TabsList>
-                        <TabsTrigger value="grid">
-                          <Grid3x3 className="h-4 w-4" />
-                        </TabsTrigger>
-                        <TabsTrigger value="list">
-                          <List className="h-4 w-4" />
-                        </TabsTrigger>
-                      </TabsList>
-                    </Tabs>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Product Grid */}
-            {viewMode === "grid" ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {products.map((product) => (
-                  <Card
-                    key={product.id}
-                    className="group relative overflow-hidden transition-all hover:shadow-xl cursor-pointer border-0"
-                  >
-                    {/* Product Image */}
-                    <div className="relative aspect-[3/4] overflow-hidden bg-muted">
-                      <ImageWithFallback
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-
-                      {/* Badges */}
-                      <div className="absolute top-4 left-4 flex flex-col gap-2">
-                        {product.isNew && (
-                          <Badge className="bg-[#D4AF37] text-black hover:bg-[#C5A028]">
-                            New
-                          </Badge>
-                        )}
-                        {product.isBestseller && (
-                          <Badge variant="secondary">Bestseller</Badge>
-                        )}
-                      </div>
-
-                      {/* Wishlist Button */}
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="absolute top-4 right-4 bg-white/90 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <Heart className="h-5 w-5" />
-                      </Button>
-
-                      {/* Quick View */}
-                      <div className="absolute bottom-0 left-0 right-0 bg-foreground text-background p-4 translate-y-full group-hover:translate-y-0 transition-transform">
-                        <Button className="w-full bg-[#D4AF37] text-black hover:bg-[#C5A028]">
-                          Quick View
-                        </Button>
-                      </div>
-                    </div>
-
-                    {/* Product Info */}
-                    <CardContent className="p-4">
-                      <p className="text-xs text-muted-foreground mb-2">{product.category}</p>
-                      <h3 className="mb-2 group-hover:text-[#D4AF37] transition-colors">
-                        {product.name}
-                      </h3>
-                      
-                      {/* Rating */}
-                      <div className="flex items-center gap-1 mb-2">
-                        <Star className="h-3 w-3 fill-[#D4AF37] text-[#D4AF37]" />
-                        <span className="text-sm">{product.rating}</span>
-                        <span className="text-xs text-muted-foreground">({product.reviews})</span>
-                      </div>
-                      
-                      <p className="text-[#D4AF37]">${product.price.toLocaleString()}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {products.map((product) => (
-                  <Card
-                    key={product.id}
-                    className="group overflow-hidden transition-all hover:shadow-xl cursor-pointer border-0"
-                  >
-                    <CardContent className="p-0">
-                      <div className="flex flex-col sm:flex-row gap-6">
-                        {/* Product Image */}
-                        <div className="relative w-full sm:w-64 aspect-[4/3] sm:aspect-square overflow-hidden bg-muted flex-shrink-0">
-                          <ImageWithFallback
-                            src={product.image}
-                            alt={product.name}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          />
-                          
-                          {/* Badges */}
-                          <div className="absolute top-4 left-4 flex gap-2">
-                            {product.isNew && (
-                              <Badge className="bg-[#D4AF37] text-black hover:bg-[#C5A028]">
-                                New
-                              </Badge>
-                            )}
-                            {product.isBestseller && (
-                              <Badge variant="secondary">Bestseller</Badge>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Product Details */}
-                        <div className="flex-1 p-6 flex flex-col justify-between">
-                          <div>
-                            <p className="text-xs text-muted-foreground mb-2">{product.category}</p>
-                            <h3 className="text-xl mb-2 group-hover:text-[#D4AF37] transition-colors">
-                              {product.name}
-                            </h3>
-                            
-                            {/* Rating */}
-                            <div className="flex items-center gap-1 mb-4">
-                              <Star className="h-4 w-4 fill-[#D4AF37] text-[#D4AF37]" />
-                              <span className="text-sm">{product.rating}</span>
-                              <span className="text-xs text-muted-foreground">({product.reviews} reviews)</span>
-                            </div>
-                            
-                            <p className="text-muted-foreground text-sm mb-4">
-                              Premium quality craftsmanship with attention to every detail. 
-                              Experience luxury that stands the test of time.
-                            </p>
-                          </div>
-                          
-                          <div className="flex items-center justify-between">
-                            <p className="text-[#D4AF37] text-xl">${product.price.toLocaleString()}</p>
-                            <div className="flex gap-2">
-                              <Button variant="outline" size="icon">
-                                <Heart className="h-5 w-5" />
-                              </Button>
-                              <Button className="bg-[#D4AF37] text-black hover:bg-[#C5A028]">
-                                View Details
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-
-            {/* Pagination */}
-            <div className="mt-12 flex justify-center">
-              <div className="flex items-center gap-2">
-                <Button variant="outline" disabled>
-                  Previous
-                </Button>
-                <Button variant="outline" className="bg-[#D4AF37] text-black hover:bg-[#C5A028] border-[#D4AF37]">
-                  1
-                </Button>
-                <Button variant="outline">2</Button>
-                <Button variant="outline">3</Button>
-                <Button variant="outline">
-                  Next
-                </Button>
-              </div>
+              {/* Product Grid */}
+              <ItemsGrid
+                items={products}
+                renderItem={(product: Product) => (
+                  <ProductCard key={product.id} product={product} />
+                )}
+                viewMode={viewMode}
+                gridCols={{
+                  default: 1,
+                  sm: 2,
+                  lg: 3,
+                }}
+                showLoadMore={true}
+                onLoadMore={() => console.log("Load more")}
+                loadMoreLabel="Load More Products"
+                className={showFilters ? "lg:col-span-3" : "lg:col-span-4"}
+              />
             </div>
           </div>
         </section>
       </div>
-
     </div>
   );
 }
