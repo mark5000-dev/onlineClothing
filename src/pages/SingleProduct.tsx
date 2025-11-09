@@ -15,6 +15,7 @@ import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
 import { Heart, Star, Truck, RotateCcw, Shield, Minus, Plus, Share2 } from "lucide-react";
 import { useAppDispatch } from "../redux/hooks";
 import { addToCart, removeFromCart } from "../redux/features/cartSlice";
+import Loading from "../components/loading";
 
 // Mocked product fetch (pretend this is an API call)
 const fetchProduct = async (id: number) => {
@@ -67,9 +68,7 @@ export default function SingleProduct() {
 
   if (loading || !product) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-muted-foreground">Loading product...</p>
-      </div>
+      <Loading />
     );
   }
 
