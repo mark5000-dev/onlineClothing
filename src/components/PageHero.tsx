@@ -18,6 +18,7 @@ interface PageHeroProps {
   };
   showGradient?: boolean;
   className?: string;
+  height?: string;
 }
 
 export const PageHero: React.FC<PageHeroProps> = ({
@@ -28,12 +29,13 @@ export const PageHero: React.FC<PageHeroProps> = ({
   badge,
   showGradient = true,
   className = '',
+  height = '45vh'
 }) => {
   const hasImage = !!imageUrl;
 
   return (
     <section 
-      className={`relative ${hasImage ? 'h-[45vh] min-h-[350px]' : 'py-12'} overflow-hidden ${
+      className={`relative ${hasImage ?  `h-[${height}] min-h-[350px]` : 'py-12'} overflow-hidden ${
         hasImage ? '' : 'bg-card border-b border-border'
       } ${className}`}
     >

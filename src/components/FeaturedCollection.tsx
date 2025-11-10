@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Check } from "lucide-react";
 
-export function FeaturedCollection() {
+export const FeaturedCollection: React.FC =() => {
   return (
     <section className="py-20 bg-card">
       <div className="container mx-auto px-4 lg:px-8">

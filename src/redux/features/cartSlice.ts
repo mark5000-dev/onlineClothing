@@ -16,7 +16,7 @@ const initialState: CartState = {
   discount: 0,
   tax: 0,
   total: 0,
-  promoCode: undefined,
+  promoCode: undefined
 };
 
 const cartSlice = createSlice({

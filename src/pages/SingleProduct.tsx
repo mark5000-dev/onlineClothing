@@ -6,12 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../components/ui/breadcrumb";
 import { Separator } from "../components/ui/separator";
 import { Label } from "../components/ui/label";
-//import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { Input } from "../components/ui/input";
-//import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion";
 import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
-//import { Avatar, AvatarFallback } from "../components/ui/avatar";
-//import { Progress } from "../components/ui/progress";
 import { Heart, Star, Truck, RotateCcw, Shield, Minus, Plus, Share2 } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addToCart, removeFromCart } from "../redux/features/cartSlice";
@@ -88,7 +84,7 @@ export default function SingleProduct() {
         quantity,
         image: product.images[0],
         size: selectedSize,
-      })
+      } as CartItem)
     );
   };
 

@@ -1,7 +1,8 @@
 import {StrictMode} from "react";
 import {createRoot} from "react-dom/client";
 import App from "./App.tsx";
-import "./styles/globals.css";
+import "./index.css"
+//import "./styles/globals.css";
 import { Provider } from "react-redux";
 import {store} from "./redux/store.ts";
 import { BrowserRouter } from "react-router-dom";

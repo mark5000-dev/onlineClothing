@@ -7,7 +7,7 @@ import type { Category } from "../model";
 export const CategoryCard: React.FC<{category :Category}> = ({category}) => {
     return (
         <>
-        <Link to={`/category/${category.name}`}>
+        <Link to={`/category/${category.slug}`}>
             <Card
               key={category.id}
               className="group relative overflow-hidden cursor-pointer border-0"

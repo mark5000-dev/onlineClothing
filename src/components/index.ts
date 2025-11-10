@@ -4,7 +4,7 @@ export { Footer } from './Footer';
 
 // Reusable Page Components (Use these for all pages with listing/filtering)
 export { PageHero } from './PageHero';
-export { SubcategoryNav } from './SubcategoryNav';
+export { SubcategoryNav } from './SubCategoryNav';
 export { ItemsToolbar } from './ItemsToolbar';
 export { ItemsFilter } from './ItemsFilter';
 export { ItemsGrid } from './ItemsGrid';
@@ -29,8 +29,3 @@ export { Cart } from './Cart';
 // Utility
 export { ImageWithFallback } from './ui/ImageWithFallback';
 
-// DEPRECATED: Use reusable components instead
-// - CollectionHero -> Use PageHero + SubcategoryNav
-// - CollectionToolbar -> Use ItemsToolbar
-// - CollectionFilter -> Use ItemsFilter
-// - CollectionGrid -> Use ItemsGrid with ProductCard

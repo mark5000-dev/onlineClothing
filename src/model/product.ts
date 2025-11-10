@@ -14,6 +14,7 @@ export interface Product {
   images?: string[];
   inStock?: boolean;
   stock?: number;
+  isFeatured?: boolean;
 }
 
 export interface ProductFilters {

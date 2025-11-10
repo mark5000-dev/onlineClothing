@@ -2,7 +2,6 @@ import { ImageWithFallback } from "../components/ui/ImageWithFallback";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
-import { Separator } from "../components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { Award, Heart, Globe, Sparkles, Users, TrendingUp } from "lucide-react";
 
@@ -83,8 +82,7 @@ export default function About() {
               Redefining Luxury
             </h1>
             <p className="text-white/90 text-lg md:text-xl max-w-2xl">
-              For over two decades, LUXÉ has been the destination for those who 
-              appreciate the finest in fashion and craftsmanship.
+              For over two decades, LUXÉ has been the destination for those who appreciate the finest in fashion and craftsmanship.
             </p>
           </div>
         </section>

@@ -8,6 +8,7 @@ import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { removeFromWishlist, toggleWishlist } from "../redux/features/wishlistSlice";
 import { addToCart } from "../redux/features/cartSlice";
 import { Link } from "react-router-dom";
+import type { CartItem } from "../model";
 
 export default function Wishlist() {
   const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ export default function Wishlist() {
       price: item.price,
       quantity: 1,
       image: item.image,
-    }));
+    } as CartItem));
   };
 
   const handleShare = () => {

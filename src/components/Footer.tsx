@@ -26,7 +26,7 @@ const footerLinks = {
   ],
 };
 
-export function Footer() {
+export const Footer: React.FC = () => {
   return (
     <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 lg:px-8 py-16">

@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Mail } from "lucide-react";
 
-export function Newsletter() {
+export const Newsletter: React.FC = () => {
   return (
     <section className="py-20 bg-foreground text-background">
       <div className="container mx-auto px-4 lg:px-8">

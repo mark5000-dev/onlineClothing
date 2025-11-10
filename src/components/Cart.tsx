@@ -14,7 +14,7 @@ interface CartProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export function Cart({ open, onOpenChange }: CartProps) {
+export const Cart: React.FC<CartProps> = ({ open, onOpenChange }) =>{
   const dispatch = useAppDispatch();
   const { items, subtotal, shipping, total } = useAppSelector(state => state.cart);
 
@@ -29,7 +29,7 @@ export function Cart({ open, onOpenChange }: CartProps) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-lg flex flex-col p-0">
+      <SheetContent side="right" className="w-full sm:max-w-lg flex flex-col p-0 bg-[#fffaf0]">
         <SheetHeader className="px-6 pt-6 pb-4">
           <SheetTitle className="flex items-center gap-2">
             <ShoppingBag className="h-5 w-5" />

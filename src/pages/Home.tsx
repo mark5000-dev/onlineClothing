@@ -1,12 +1,11 @@
-import type { FC } from "react";
-
 import { Hero } from "../components/Hero";
 import { FeaturedCollection } from "../components/FeaturedCollection";
 import { CategoryShowcase } from "../components/CategoryShowcase";
 import { ProductGrid } from "../components/ProductGrid";
 import { Newsletter } from "../components/Newsletter";
+import type { Product } from "../model";
 
-const products = [
+const products: Product[] = [
   {
     id: 1,
     name: "Elegant Evening Coat",
@@ -41,7 +40,7 @@ const products = [
   },
 ];
 
-const Home: FC = () => {
+export default function Home () {
   
   return (
     <div className="min-h-screen">
@@ -56,5 +55,3 @@ const Home: FC = () => {
 
   );
 };
-
-export default Home;

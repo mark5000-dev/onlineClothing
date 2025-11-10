@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 import { ImageWithFallback } from "./ui/ImageWithFallback";
 
-export function Hero() {
+export const Hero : React.FC = () => {
   return (
     <section className="relative h-[90vh] min-h-[600px] overflow-hidden">
       {/* Background Image */}
