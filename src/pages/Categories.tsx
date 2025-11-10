@@ -2,59 +2,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../co
 import { Button } from "../components/ui/button";
 import { CategoryCard } from "../components/CategoryCard";
 import type { Category } from "../model";
+import { useAppSelector } from "../redux/hooks";
 
-const categories: Category[] = [
-  {
-    id: 1,
-    name: "Women's Collection",
-    slug: "womens-collection",
-    description: "Elegant pieces crafted for the modern woman",
-    image: "https://images.unsplash.com/photo-1661268095505-cbfb42ef6f2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBmYXNoaW9uJTIwd29tZW58ZW58MXx8fHwxNzYyMDg2MTM3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    productCount: 156,
-  },
-  {
-    id: 2,
-    name: "Men's Collection",
-    slug: "mens-collection",
-    description: "Sophisticated tailoring and timeless style",
-    image: "https://images.unsplash.com/photo-1600481006437-5ef63a680aa5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBmYXNoaW9uJTIwbWVufGVufDF8fHx8MTc2MjA4NjEzN3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    productCount: 124,
-  },
-  {
-    id: 3,
-    name: "Accessories",
-    slug: "accessories",
-    description: "Finishing touches that elevate any ensemble",
-    image: "https://images.unsplash.com/photo-1636619608432-77941d282b32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBhY2Nlc3Nvcmllc3xlbnwxfHx8fDE3NjIwMTY2OTN8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    productCount: 89,
-  },
-  {
-    id: 4,
-    name: "Jewelry",
-    slug: "jewelry",
-    description: "Exquisite pieces for every occasion",
-    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBqZXdlbHJ5fGVufDF8fHx8MTc2MjA3NTI4NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    productCount: 67,
-  },
-  {
-    id: 5,
-    name: "Shoes",
-    slug: "shoes",
-    description: "From casual elegance to formal sophistication",
-    image: "https://images.unsplash.com/photo-1581101767113-1677fc2beaa8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzaG9lc3xlbnwxfHx8fDE3NjIwODYxMzh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    productCount: 92,
-  },
-  {
-    id: 6,
-    name: "Bags",
-    slug: "bags",
-    description: "Luxury handbags and statement pieces",
-    image: "https://images.unsplash.com/photo-1591348278900-019a8a2a8b1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBiYWdzfGVufDF8fHx8MTc2MjA4NjEzOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    productCount: 78,
-  },
-];
 
 export default function Categories() {
+
+  const categories = useAppSelector((state) => state.categories.categories)
+
   return (
     <div className="min-h-screen flex flex-col">
 

@@ -2,6 +2,8 @@ import { Header } from "./components/Header";
 import {lazy, Suspense} from "react";
 import { Footer } from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
+import { useAppDispatch } from "./redux/hooks";
+import { setCategories } from "./redux/features/categoriesSlice";
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -13,8 +15,11 @@ const Products = lazy(() => import('./pages/Products'));
 const Profile = lazy(()=> import('./pages/Profile'));
 const Wishlist = lazy(() => import('./pages/Wishlist'));
 
+import { mockCategories as categories } from "./model";
 
 export default function App() {
+  const dispatch = useAppDispatch();
+  dispatch(setCategories(categories));
   return (
     <div className="min-h-screen">
       <Header />
@@ -27,7 +32,7 @@ export default function App() {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/about" element={<About />} />
             <Route path="/categories" element={<Category />} />
-            <Route path="/category/:categoryName" element={<SingleCategory />} />
+            <Route path="/category/:slug" element={<SingleCategory />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </Suspense>

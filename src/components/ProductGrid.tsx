@@ -4,6 +4,7 @@ import { Heart } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import type { Product } from "../model";
+import { Link } from "react-router-dom";
 //import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 
 
@@ -68,7 +69,7 @@ export const ProductGrid: React.FC<{ products: Product[] }> = ({products}) => {
               {/* Product Info */}
               <CardContent className="p-6">
                 <p className="text-sm text-muted-foreground mb-2">
-                  {product.category}
+                  {product.mainCategory}
                 </p>
                 <h3 className="mb-3 group-hover:text-[#D4AF37] transition-colors">
                   {product.name}
@@ -83,13 +84,15 @@ export const ProductGrid: React.FC<{ products: Product[] }> = ({products}) => {
 
         {/* View All Button */}
         <div className="text-center mt-12">
+          <Link to="/products">
           <Button
             size="lg"
             variant="outline"
             className="border-foreground hover:bg-foreground hover:text-background px-8"
-          >
+            >
             View All Products
           </Button>
+          </Link>
         </div>
       </div>
     </section>
