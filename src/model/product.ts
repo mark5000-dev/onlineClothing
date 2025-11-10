@@ -11,7 +11,7 @@ export interface Product {
   rating?: number;
   reviews?: number;
   size?: string;
-  color?: string;
+  colors?: string[];
   images?: string[];
   inStock?: boolean;
   stock?: number;

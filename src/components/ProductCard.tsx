@@ -9,6 +9,9 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { toggleWishlist } from "../redux/features/wishlistSlice";
 import React from "react";
 
+const slugify = (name: string, id: number) =>
+  `${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${id}`;
+
 export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     const dispatch = useAppDispatch();
     const wishlistItems = useAppSelector(state => state.wishlist.items);
@@ -31,7 +34,7 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
 
     return (
         <>
-        <Link to={`/product/${product.id}`}>
+        <Link to={`/product/${slugify(product.name, product.id)}`}>
         <Card
                 key={product.id}
                 className="group relative overflow-hidden transition-all hover:shadow-xl cursor-pointer border-0"
