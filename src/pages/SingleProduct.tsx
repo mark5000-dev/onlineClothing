@@ -11,11 +11,13 @@ import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
 import { Separator } from "../components/ui/separator";
+import { Avatar, AvatarFallback } from "../components/ui/avatar";
 import { Heart, Star, Truck, RotateCcw, Shield, Minus, Plus, Share2 } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addToCart } from "../redux/features/cartSlice";
 import { toggleWishlist } from "../redux/features/wishlistSlice";
 import type { CartItem } from "../model";
+
 const id = 1;
 const oneOP = {
     id,
@@ -35,6 +37,7 @@ const oneOP = {
       { id: 2, author: "James R.", rating: 5, date: "1 week ago", comment: "Luxury through and through." },
     ],
   };
+
 const fetchProductBySlug = async (slug: string) => {
   // Extract id from slug like "cashmere-overcoat-1"
   const id = parseInt(slug.split("-").pop() || "0");
@@ -72,6 +75,7 @@ export default function SingleProduct() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("M");
+  const [selectedColor, setSelectedColor] = useState("Black");
 
   useEffect(() => {
     if (!slug) return;
@@ -114,6 +118,13 @@ export default function SingleProduct() {
       addedAt: new Date().toISOString(),
     }));
 
+  const colorOptions = [
+    { name: "Black", hex: "#000000" },
+    { name: "Navy", hex: "#1e3a5f" },
+    { name: "Charcoal", hex: "#36454f" },
+    { name: "Camel", hex: "#C19A6B" },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
       <section className="bg-card border-b border-border">
@@ -136,7 +147,7 @@ export default function SingleProduct() {
             {/* Images */}
             <div>
               <Card className="overflow-hidden border-0">
-                <div className="relative aspect-[4/5] bg-muted">
+                <div className="relative aspect-[3/4] bg-muted">
                   <ImageWithFallback src={product.images[selectedImage]} alt={product.name} className="w-full h-full object-cover" />
                   <Badge className="absolute top-6 left-6 bg-[#D4AF37] text-black">Luxury</Badge>
                   <Button
@@ -169,60 +180,190 @@ export default function SingleProduct() {
 
             {/* Product info */}
             <div className="space-y-6">
-              <Badge variant="outline">{product.category}</Badge>
-              <h1 className="font-serif text-[2.5rem]">{product.name}</h1>
+              <Badge variant="outline" className="border-[#D4AF37]/30 text-[#D4AF37]">{product.category}</Badge>
+              <h1 className="font-serif text-[2.5rem] leading-tight">{product.name}</h1>
 
               <div className="flex items-center gap-4">
-                <div className="flex">{[1,2,3,4,5].map(i => <Star key={i} className="h-4 w-4 fill-[#D4AF37]" />)}</div>
-                <span className="text-sm">{product.reviews.length} Reviews</span>
+                <div className="flex items-center gap-1">
+                  {[1,2,3,4,5].map(i => (
+                    <Star key={i} className="h-4 w-4 fill-[#D4AF37] text-[#D4AF37]" />
+                  ))}
+                </div>
+                <span className="text-sm text-muted-foreground">({product.reviews.length} Reviews)</span>
               </div>
 
-              <p className="text-[#D4AF37] text-[2rem]">${product.price.toLocaleString()}</p>
-              <p className="text-muted-foreground">{product.description}</p>
+              <div className="py-2">
+                <p className="text-[#D4AF37] text-[2rem] tracking-tight">${product.price.toLocaleString()}</p>
+              </div>
+              
+              <p className="text-muted-foreground leading-relaxed">{product.description}</p>
 
               <Separator />
 
-              {/* Quantity & Add */}
+              {/* Color Selection */}
               <div>
-                <Label>Quantity</Label>
-                <div className="flex items-center gap-4 mt-2">
-                  <Button size="icon" variant="ghost" onClick={() => handleQuantityChange(-1)}><Minus /></Button>
-                  <Input value={quantity} className="w-16 text-center" readOnly />
-                  <Button size="icon" variant="ghost" onClick={() => handleQuantityChange(1)}><Plus /></Button>
+                <Label className="mb-3 block text-sm uppercase tracking-wider">Color</Label>
+                <div className="flex items-center gap-3">
+                  {colorOptions.map((color) => (
+                    <button
+                      key={color.name}
+                      onClick={() => setSelectedColor(color.name)}
+                      className={`relative w-8 h-8 rounded-full border-2 transition-all ${
+                        selectedColor === color.name
+                          ? "border-[#D4AF37] scale-110 shadow-md"
+                          : "border-border hover:border-[#D4AF37]/50 hover:scale-105"
+                      }`}
+                      style={{ backgroundColor: color.hex }}
+                      title={color.name}
+                    >
+                      {selectedColor === color.name && (
+                        <span className="absolute inset-0 flex items-center justify-center">
+                          <span className="w-2 h-2 bg-white rounded-full shadow-sm" />
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                  <span className="text-sm text-muted-foreground ml-2">{selectedColor}</span>
                 </div>
               </div>
 
-              <div className="flex gap-3">
-                <Button className="flex-1 bg-[#D4AF37] text-black hover:bg-[#C5A028]" onClick={handleAddToCart}>
+              {/* Size Selection */}
+              <div>
+                <Label className="mb-3 block text-sm uppercase tracking-wider">Size</Label>
+                <RadioGroup value={selectedSize} onValueChange={setSelectedSize}>
+                  <div className="flex gap-2">
+                    {["XS", "S", "M", "L", "XL"].map((size) => (
+                      <div key={size} className="flex-1">
+                        <RadioGroupItem value={size} id={size} className="peer sr-only" />
+                        <Label
+                          htmlFor={size}
+                          className="flex items-center justify-center border-2 border-border py-2 cursor-pointer hover:border-[#D4AF37] hover:bg-[#D4AF37]/5 peer-data-[state=checked]:border-[#D4AF37] peer-data-[state=checked]:bg-[#D4AF37]/10 transition-all text-sm"
+                        >
+                          {size}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </RadioGroup>
+              </div>
+
+              {/* Quantity */}
+              <div>
+                <Label className="mb-3 block text-sm uppercase tracking-wider">Quantity</Label>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center border-2 border-border rounded">
+                    <Button 
+                      size="icon" 
+                      variant="ghost" 
+                      className="h-9 w-9 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37]" 
+                      onClick={() => handleQuantityChange(-1)}
+                    >
+                      <Minus className="h-4 w-4" />
+                    </Button>
+                    <Input 
+                      value={quantity} 
+                      className="w-14 h-9 text-center border-0 border-x-2 border-border text-sm" 
+                      readOnly 
+                    />
+                    <Button 
+                      size="icon" 
+                      variant="ghost" 
+                      className="h-9 w-9 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37]" 
+                      onClick={() => handleQuantityChange(1)}
+                    >
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <span className="text-xs text-muted-foreground italic">Only {product.stock} remaining</span>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <Button 
+                  className="flex-1 bg-[#D4AF37] text-black hover:bg-[#C5A028] transition-all hover:shadow-lg" 
+                  size="lg"
+                  onClick={handleAddToCart}
+                >
                   Add to Cart
                 </Button>
-                <Button variant="outline"><Share2 /></Button>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-2 hover:border-[#D4AF37] hover:bg-[#D4AF37]/5"
+                >
+                  <Share2 className="h-5 w-5" />
+                </Button>
               </div>
 
               <Separator />
 
               {/* Product Features */}
-              <div className="grid grid-cols-3 gap-4">
-                <Card className="text-center p-4 border-border"><CardContent><Truck className="h-6 w-6 mx-auto mb-2 text-[#D4AF37]" /><p className="text-xs">Free Shipping</p></CardContent></Card>
-                <Card className="text-center p-4 border-border"><CardContent><RotateCcw className="h-6 w-6 mx-auto mb-2 text-[#D4AF37]" /><p className="text-xs">30-Day Returns</p></CardContent></Card>
-                <Card className="text-center p-4 border-border"><CardContent><Shield className="h-6 w-6 mx-auto mb-2 text-[#D4AF37]" /><p className="text-xs">2-Year Warranty</p></CardContent></Card>
+              <div className="grid grid-cols-3 gap-3">
+                <Card className="text-center border-border hover:border-[#D4AF37]/30 transition-colors bg-card/50">
+                  <CardContent className="p-4">
+                    <Truck className="h-5 w-5 mx-auto mb-2 text-[#D4AF37]" />
+                    <p className="text-xs leading-tight">Free<br/>Shipping</p>
+                  </CardContent>
+                </Card>
+                <Card className="text-center border-border hover:border-[#D4AF37]/30 transition-colors bg-card/50">
+                  <CardContent className="p-4">
+                    <RotateCcw className="h-5 w-5 mx-auto mb-2 text-[#D4AF37]" />
+                    <p className="text-xs leading-tight">30-Day<br/>Returns</p>
+                  </CardContent>
+                </Card>
+                <Card className="text-center border-border hover:border-[#D4AF37]/30 transition-colors bg-card/50">
+                  <CardContent className="p-4">
+                    <Shield className="h-5 w-5 mx-auto mb-2 text-[#D4AF37]" />
+                    <p className="text-xs leading-tight">2-Year<br/>Warranty</p>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
 
-          {/* Reviews */}
-          <div className="mt-16">
-            <h2 className="text-xl mb-4">Customer Reviews</h2>
-            <div className="space-y-4">
+          {/* Reviews Section */}
+          <div className="mt-20">
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-[2rem] mb-3">Customer Testimonials</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Discover what our discerning clients have to say about their experience with our curated collection
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {product.reviews.map((r: any) => (
-                <div key={r.id} className="border-b border-border pb-4">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="font-medium">{r.author}</p>
-                    <p className="text-sm text-muted-foreground">{r.date}</p>
-                  </div>
-                  <div className="flex mb-2">{[...Array(r.rating)].map((_, i) => <Star key={i} className="h-4 w-4 fill-[#D4AF37]" />)}</div>
-                  <p>{r.comment}</p>
-                </div>
+                <Card key={r.id} className="border-border bg-card hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-4 mb-4">
+                      <Avatar className="h-12 w-12 border-2 border-[#D4AF37]">
+                        <AvatarFallback className="bg-[#D4AF37]/10 text-[#D4AF37]">
+                          {r.author.split(' ').map((n: string) => n[0]).join('')}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="font-medium">{r.author}</h4>
+                          <span className="text-xs text-muted-foreground">{r.date}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          {[...Array(5)].map((_, i) => (
+                            <Star 
+                              key={i} 
+                              className={`h-3.5 w-3.5 ${
+                                i < r.rating 
+                                  ? 'fill-[#D4AF37] text-[#D4AF37]' 
+                                  : 'fill-muted text-muted'
+                              }`} 
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed italic">
+                      "{r.comment}"
+                    </p>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
