@@ -31,7 +31,7 @@ const applyFiltersAndSort = (state: ProductsState) => {
 
   // Apply category filter
   if (state.filters.categories.length > 0) {
-    filtered = filtered.filter(p => state.filters.categories.includes(p.category));
+    filtered = filtered.filter(p => state.filters.categories.includes(p.mainCategory));
   }
 
   // Apply price range filter
