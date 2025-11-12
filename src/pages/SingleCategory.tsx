@@ -2,131 +2,145 @@ import { useState, useEffect, useMemo } from "react";
 import { PageHero } from "../components/PageHero";
 import { SubcategoryNav } from "../components/SubCategoryNav";
 import { ItemsToolbar } from "../components/ItemsToolbar";
-import { ItemsFilter } from "../components/ItemsFilter";
+//import { ItemsFilter } from "../components/ItemsFilter";
 import { ItemsGrid } from "../components/ItemsGrid";
 import { ProductCard } from "../components/ProductCard";
 import { CollectionInfo } from "../components/Info";
-import { type Product, mockProducts as products } from "../model";
+import { type Product, type Subcategory} from "../model";
 import { useParams } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
 
-type Subcategory = { id: string; label: string };
-type CategoryData = { hero: string; title: string; subcategories: Subcategory[]; products: Product[] };
+// const filterSections = [
+//   {
+//     id: "price",
+//     title: "Price Range",
+//     type: "slider" as const,
+//     min: 0,
+//     max: 3000,
+//     step: 50,
+//     value: [0, 3000],
+//   },
+//   {
+//     id: "size",
+//     title: "Size",
+//     type: "buttons" as const,
+//     options: [
+//       { id: "xs", label: "XS" },
+//       { id: "s", label: "S" },
+//       { id: "m", label: "M" },
+//       { id: "l", label: "L" },
+//       { id: "xl", label: "XL" },
+//       { id: "xxl", label: "XXL" },
+//     ],
+//   },
+//   {
+//     id: "color",
+//     title: "Color",
+//     type: "colors" as const,
+//     colors: [
+//       "#000000",
+//       "#FFFFFF",
+//       "#8B4513",
+//       "#1A1A1A",
+//       "#D4AF37",
+//       "#2C3E50",
+//       "#C19A6B",
+//       "#8B0000",
+//       "#2F4F4F",
+//       "#4B0082",
+//     ],
+//   },
+//   {
+//     id: "material",
+//     title: "Material",
+//     type: "checkbox" as const,
+//     options: [
+//       { id: "silk", label: "Silk" },
+//       { id: "wool", label: "Wool" },
+//       { id: "cotton", label: "Cotton" },
+//       { id: "cashmere", label: "Cashmere" },
+//       { id: "leather", label: "Leather" },
+//       { id: "linen", label: "Linen" },
+//     ],
+//   },
+// ];
 
-const filterSections = [
-  {
-    id: "price",
-    title: "Price Range",
-    type: "slider" as const,
-    min: 0,
-    max: 3000,
-    step: 50,
-    value: [0, 3000],
-  },
-  {
-    id: "size",
-    title: "Size",
-    type: "buttons" as const,
-    options: [
-      { id: "xs", label: "XS" },
-      { id: "s", label: "S" },
-      { id: "m", label: "M" },
-      { id: "l", label: "L" },
-      { id: "xl", label: "XL" },
-      { id: "xxl", label: "XXL" },
-    ],
-  },
-  {
-    id: "color",
-    title: "Color",
-    type: "colors" as const,
-    colors: [
-      "#000000",
-      "#FFFFFF",
-      "#8B4513",
-      "#1A1A1A",
-      "#D4AF37",
-      "#2C3E50",
-      "#C19A6B",
-      "#8B0000",
-      "#2F4F4F",
-      "#4B0082",
-    ],
-  },
-  {
-    id: "material",
-    title: "Material",
-    type: "checkbox" as const,
-    options: [
-      { id: "silk", label: "Silk" },
-      { id: "wool", label: "Wool" },
-      { id: "cotton", label: "Cotton" },
-      { id: "cashmere", label: "Cashmere" },
-      { id: "leather", label: "Leather" },
-      { id: "linen", label: "Linen" },
-    ],
-  },
-];
+// // Mock API function
+// function fetchCategoryData(slug: string): Promise<CategoryData> {
+//   const allProducts = products;
 
-// Mock API function
-function fetchCategoryData(slug: string): Promise<CategoryData> {
-  const allProducts = products;
+//   const allSubcategories: Subcategory[] = [
+//     { id: "all", label: "All Items" },
+//     { id: "dresses", label: "Dresses" },
+//     { id: "tops", label: "Tops" },
+//     { id: "bottoms", label: "Bottoms" },
+//     { id: "outerwear", label: "Outerwear" },
+//   ];
 
-  const allSubcategories: Subcategory[] = [
-    { id: "all", label: "All Items" },
-    { id: "dresses", label: "Dresses" },
-    { id: "tops", label: "Tops" },
-    { id: "bottoms", label: "Bottoms" },
-    { id: "outerwear", label: "Outerwear" },
-  ];
+//   const filteredProducts = allProducts.filter((product) => product.mainCategory === slug);
 
-  const filteredProducts = allProducts.filter((product) => product.mainCategory === slug);
-
-  return Promise.resolve({
-    products: filteredProducts,
-    subcategories: allSubcategories,
-    hero: "https://images.unsplash.com/photo-1661268095505-cbfb42ef6f2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-    title: slug === "womens" ? "Women's Collection" : "Category Title",
-  });
-}
+//   return Promise.resolve({
+//     products: filteredProducts,
+//     subcategories: allSubcategories,
+//     hero: "https://images.unsplash.com/photo-1661268095505-cbfb42ef6f2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
+//     title: slug === "womens" ? "Women's Collection" : "Category Title",
+//   });
+// }
 
 export default function SingleCategory() {
   const { slug } = useParams<{ slug: string }>();
   const [products, setProducts] = useState<Product[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
-  const [categoryData, setCategoryData] = useState<{ hero: string; title: string } | null>(null);
+  const [categoryData, setCategoryData] = useState<{ hero: string; title: string }>({hero:"", title:""});
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [selectedSubcategory, setSelectedSubcategory] = useState("all");
 
+  //Fetch products with the category given by the slug with error boundaries
+  const category = useAppSelector((state) => state.categories.categories.find(c => c.slug === slug));
+  if (!category) return <div className="p-12 text-center">Category not found</div>;
+  const categoryProducts = useAppSelector((state) => state.products.products.filter(p => p.mainCategory === category.id));
+  if (!categoryProducts) return <div className="p-12 text-center">Unable to fetch products with category given</div>;
+
+  const myCategoryData = { hero: category.image , title: category.name };
+
   useEffect(() => {
-    if (!slug) return;
-    setLoading(true);
-    fetchCategoryData(slug)
-      .then((data) => {
-        setProducts(data.products);
-        setSubcategories(data.subcategories);
-        setCategoryData({ hero: data.hero, title: data.title });
-      })
-      .finally(() => setLoading(false));
+    setProducts(categoryProducts);
+    setCategoryData(myCategoryData);
+    setLoading(false);
+
+    const subs = category.subcategories
+      ? [{ id: "all", name: "All Items", slug: "all" }, ...category.subcategories]
+      : [{ id: "all", name: "All Items", slug: "all" }];
+
+    setSubcategories(subs);
   }, [slug]);
 
-  // Apply subcategory filter
   const filteredProducts = useMemo(() => {
-    if (selectedSubcategory === "all") 
-      {
-        return products
-      };
-    return products.filter(p => p.mainCategory.toLowerCase() === selectedSubcategory.toLowerCase());
+    if (selectedSubcategory === "all") {
+      return products;
+    }
+
+    return products.filter((p) =>
+      Array.isArray(p.subCategories) &&
+      p.subCategories.some(
+        (sub) =>
+          sub.toLowerCase() === selectedSubcategory.toLowerCase() ||
+          sub.replace(/\s+/g, "-").toLowerCase() === selectedSubcategory.toLowerCase()
+      )
+    );
   }, [products, selectedSubcategory]);
 
-  const handleFilterChange = (sectionId: string, value: any) => {
-    console.log("Filter changed:", sectionId, value);
-  };
+
+
+  // const handleFilterChange = (sectionId: string, value: any) => {
+  //   console.log("Filter changed:", sectionId, value);
+  // };
 
   const handleSortChange = (value: string) => console.log("Sort changed:", value);
-
   const handleSubcategorySelect = (subcategory: Subcategory) => setSelectedSubcategory(subcategory.id);
+
 
   if (loading || !categoryData) return <div className="p-12 text-center">Loading...</div>;
 
@@ -164,13 +178,13 @@ export default function SingleCategory() {
           {/* Layout: sidebar + product grid */}
           <div className="flex gap-8 mt-8">
             {/* Sidebar filters */}
-            <div className={`w-full lg:w-1/4 ${showFilters ? "block" : "hidden lg:block"}`}>
+            {/* <div className={`w-full lg:w-1/4 ${showFilters ? "block" : "hidden lg:block"}`}>
               <ItemsFilter
                 show={showFilters}
                 sections={filterSections}
                 onFilterChange={handleFilterChange}
               />
-            </div>
+            </div> */}
 
             {/* Product grid */}
             <div className="flex-1">

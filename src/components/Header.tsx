@@ -31,14 +31,17 @@ export const Header:React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="/category/new" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            <a href="/products" className="text-foreground hover:text-[#D4AF37] transition-colors">
               New Arrivals
             </a>
-            <a href="/category/women" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            <a href="/category/womens-collection" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Women
             </a>
-            <a href="/category/men" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            <a href="/category/mens-collection" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Men
+            </a>
+            <a href="/category/kids-collection" className="text-foreground hover:text-[#D4AF37] transition-colors">
+              Kids
             </a>
             <a href="/categories" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Collections

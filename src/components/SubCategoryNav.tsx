@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-
-interface Subcategory {
-  id: string;
-  label: string;
-  value?: string;
-}
+import { type Subcategory } from "../model";
 
 interface SubcategoryNavProps {
   subcategories: Subcategory[];
@@ -50,7 +45,7 @@ export const SubcategoryNav: React.FC<SubcategoryNavProps> = ({
                     : "hover:bg-muted"
                 }`}
               >
-                {subcategory.label}
+                {subcategory.name}
               </Button>
             ))}
           </div>
