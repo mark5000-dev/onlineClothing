@@ -35,7 +35,7 @@ export const mockCategories: Category[] = [
   {
   id: 3,
   name: "Kids Collection",
-  slug: "kids",
+  slug: "kids-collection",
   description: "Playful styles and durable clothing for kids of all ages",
   image: "https://via.placeholder.com/1080x1080?text=Kids+Fashion",
   productCount: 58,

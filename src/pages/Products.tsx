@@ -2,19 +2,23 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
 import { ItemsGrid } from "../components/ItemsGrid";
-import { ProductCard } from "../components/ProductCard";
-import { type Product, mockProducts as products } from "../model";
+import { ProductCard } from "../components/ProductCard"
+import { type Product } from "../model"
+import { useAppSelector } from "../redux/hooks";
 
 const subcategories = [
-  { id: "womens", label: "Women" },
-  { id: "mens", label: "Men" },
-  { id: "kids", label: "Kids" },
+  { id: "womens-collection", label: "Women" },
+  { id: "mens-collection", label: "Men" },
+  { id: "kids-collection", label: "Kids" },
   { id: "accessories", label: "Accessories" },
+  { id: "shoees", label: "Shoes" },
+  { id: "jewelry", label: "Jewelry" },
 ];
 
 export default function Products() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const navigate = useNavigate();
+  const products = useAppSelector((state) => state.products.filteredProducts || state.products.products)
 
   const handleSortChange = (value: string) => {
     console.log("Sort changed:", value);

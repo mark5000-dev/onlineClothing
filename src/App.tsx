@@ -4,6 +4,7 @@ import { Footer } from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
 import { useAppDispatch } from "./redux/hooks";
 import { setCategories } from "./redux/features/categoriesSlice";
+import { setProducts } from "./redux/features/productsSlice";
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -16,10 +17,13 @@ const Profile = lazy(()=> import('./pages/Profile'));
 const Wishlist = lazy(() => import('./pages/Wishlist'));
 
 import { mockCategories as categories } from "./model";
+import { mockProducts as products } from "./model";
+
 
 export default function App() {
   const dispatch = useAppDispatch();
   dispatch(setCategories(categories));
+  dispatch(setProducts(products));
   return (
     <div className="min-h-screen">
       <Header />
