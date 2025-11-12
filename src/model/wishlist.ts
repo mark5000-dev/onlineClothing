@@ -1,7 +1,9 @@
-import { type Product } from "./product";
-
-export interface WishlistItem extends Product {
-
+export interface WishlistItem {
+  id: number;
+  productId: number;
+  name: string;
+  price: number;
+  image: string;
   inStock: boolean;
   addedAt: string;
 }

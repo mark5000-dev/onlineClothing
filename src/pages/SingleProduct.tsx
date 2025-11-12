@@ -16,15 +16,15 @@ import { Heart, Star, Truck, RotateCcw, Shield, Minus, Plus, Share2 } from "luci
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addToCart } from "../redux/features/cartSlice";
 import { toggleWishlist } from "../redux/features/wishlistSlice";
-import type { CartItem } from "../model";
+import type { CartItem, Product } from "../model";
 
-const id = 1;
 const oneOP = {
-    id,
+    id: 1,
     name: "Cashmere Overcoat",
     price: 2899,
     stock: 8,
-    category: "Outerwear",
+    mainCategory: "womens",
+    image: "https://images.unsplash.com/photo-1567777301743-3b7ef158aadf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
     description:
       "Experience unparalleled luxury with this exquisite cashmere overcoat. Meticulously crafted from the finest 100% pure cashmere, this timeless piece combines supreme comfort with sophisticated elegance.",
     images: [
@@ -32,38 +32,39 @@ const oneOP = {
       "https://images.unsplash.com/photo-1670177257750-9b47927f68eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
       "https://images.unsplash.com/photo-1722842529941-825976fc14f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
     ],
-    reviews: [
+    comments: [
       { id: 1, author: "Sarah M.", rating: 5, date: "2 days ago", comment: "Exceptional quality and craftsmanship." },
       { id: 2, author: "James R.", rating: 5, date: "1 week ago", comment: "Luxury through and through." },
     ],
   };
 
-const fetchProductBySlug = async (slug: string) => {
-  // Extract id from slug like "cashmere-overcoat-1"
-  const id = parseInt(slug.split("-").pop() || "0");
-  const res = await fetch(`/api/products/${id}`); // your backend endpoint later
-  if (res.ok) return res.json();
 
-  //fallback mock
-  return {
-    id,
-    name: "Cashmere Overcoat",
-    price: 2899,
-    stock: 8,
-    category: "Outerwear",
-    description:
-      "Experience unparalleled luxury with this exquisite cashmere overcoat. Meticulously crafted from the finest 100% pure cashmere, this timeless piece combines supreme comfort with sophisticated elegance.",
-    images: [
-      "https://images.unsplash.com/photo-1567777301743-3b7ef158aadf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      "https://images.unsplash.com/photo-1670177257750-9b47927f68eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      "https://images.unsplash.com/photo-1722842529941-825976fc14f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-    ],
-    reviews: [
-      { id: 1, author: "Sarah M.", rating: 5, date: "2 days ago", comment: "Exceptional quality and craftsmanship." },
-      { id: 2, author: "James R.", rating: 5, date: "1 week ago", comment: "Luxury through and through." },
-    ],
-  };
-};
+// const fetchProductBySlug = async (slug: string) => {
+//   // Extract id from slug like "cashmere-overcoat-1"
+//   const id = parseInt(slug.split("-").pop() || "0");
+//   const res = await fetch(`/api/products/${id}`); // your backend endpoint later
+//   if (res.ok) return res.json();
+
+//   //fallback mock
+//   return {
+//     id,
+//     name: "Cashmere Overcoat",
+//     price: 2899,
+//     stock: 8,
+//     category: "Outerwear",
+//     description:
+//       "Experience unparalleled luxury with this exquisite cashmere overcoat. Meticulously crafted from the finest 100% pure cashmere, this timeless piece combines supreme comfort with sophisticated elegance.",
+//     images: [
+//       "https://images.unsplash.com/photo-1567777301743-3b7ef158aadf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+//       "https://images.unsplash.com/photo-1670177257750-9b47927f68eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+//       "https://images.unsplash.com/photo-1722842529941-825976fc14f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+//     ],
+//     comments: [
+//       { id: 1, author: "Sarah M.", rating: 5, date: "2 days ago", comment: "Exceptional quality and craftsmanship." },
+//       { id: 2, author: "James R.", rating: 5, date: "1 week ago", comment: "Luxury through and through." },
+//     ],
+//   };
+// };
 
 export default function SingleProduct() {
   const { slug } = useParams();
@@ -77,13 +78,23 @@ export default function SingleProduct() {
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedColor, setSelectedColor] = useState("Black");
 
+  const id = parseInt((slug?.split("-").pop() || "0"), 10);
+  const productFromRedux = useAppSelector((state) =>
+    state.products.products.find((product) => product.id === id)
+  );
+
   useEffect(() => {
-    if (!slug) return;
-    Promise.resolve(oneOP).then(data => {
-      setProduct(data);
-      setLoading(false);
-    });
-  }, [slug]);
+    if (!slug || isNaN(id)) {
+      console.log("invalid slug or id");
+      setProduct(oneOP);
+    } else if (!productFromRedux) {
+      console.log("no product in store");
+      setProduct(oneOP);
+    } else {
+      setProduct(productFromRedux);
+    }
+    setLoading(false);
+  }, [slug, id, productFromRedux]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -189,7 +200,7 @@ export default function SingleProduct() {
                     <Star key={i} className="h-4 w-4 fill-[#D4AF37] text-[#D4AF37]" />
                   ))}
                 </div>
-                <span className="text-sm text-muted-foreground">({product.reviews.length} Reviews)</span>
+                <span className="text-sm text-muted-foreground">({product.comments.length} Reviews)</span>
               </div>
 
               <div className="py-2">
@@ -321,7 +332,7 @@ export default function SingleProduct() {
             </div>
           </div>
 
-          {/* Reviews Section */}
+          {/* comments Section */}
           <div className="mt-20">
             <div className="text-center mb-12">
               <h2 className="font-serif text-[2rem] mb-3">Customer Testimonials</h2>
@@ -331,7 +342,7 @@ export default function SingleProduct() {
             </div>
             
             <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-              {product.reviews.map((r: any) => (
+              {product.comments.map((r: any) => (
                 <Card key={r.id} className="border-border bg-card hover:shadow-lg transition-shadow">
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4 mb-4">
