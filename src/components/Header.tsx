@@ -31,24 +31,24 @@ export const Header:React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="/products" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            <Link to="products" className="text-foreground hover:text-[#D4AF37] transition-colors">
               New Arrivals
-            </a>
-            <a href="/category/womens-collection" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            </Link>
+            <Link to="category/womens-collection" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Women
-            </a>
-            <a href="/category/mens-collection" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            </Link>
+            <Link to="category/mens-collection" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Men
-            </a>
-            <a href="/category/kids-collection" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            </Link>
+            <Link to="category/kids-collection" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Kids
-            </a>
-            <a href="/categories" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            </Link>
+            <Link to="categories" className="text-foreground hover:text-[#D4AF37] transition-colors">
               Collections
-            </a>
-            <a href="/about" className="text-foreground hover:text-[#D4AF37] transition-colors">
+            </Link>
+            <Link to="about" className="text-foreground hover:text-[#D4AF37] transition-colors">
               About
-            </a>
+            </Link>
           </nav>
 
           {/* Actions */}
@@ -67,15 +67,16 @@ export const Header:React.FC = () => {
               className="relative"
               asChild
             >
-              <a href="/wishlist">
+              <Link to = "/wishlist">
                 <Heart className="h-5 w-5" />
                 {wishlistItemsCount > 0 && (
                   <Badge className="absolute -top-1 -right-1 bg-[#D4AF37] text-black hover:bg-[#C5A028] h-5 w-5 flex items-center justify-center p-0 text-xs rounded-full">
                     {wishlistItemsCount}
                   </Badge>
                 )}
-              </a>
+              </Link>
             </Button>
+            
             <Button 
               variant="ghost" 
               size="icon" 
@@ -114,30 +115,30 @@ export const Header:React.FC = () => {
                 </SheetHeader>
                 <Separator className="my-4" />
                 <nav className="flex flex-col gap-4">
-                  <a href="/category/new" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
+                  <Link to="/category/new" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
                     New Arrivals
-                  </a>
-                  <a href="/category/women" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
+                  </Link>
+                  <Link to="category/women" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
                     Women
-                  </a>
-                  <a href="/category/men" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
+                  </Link>
+                  <Link to="category/men" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
                     Men
-                  </a>
-                  <a href="/categories" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
+                  </Link>
+                  <Link to="categories" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
                     Collections
-                  </a>
-                  <a href="/about" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
+                  </Link>
+                  <Link to="about" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
                     About
-                  </a>
+                  </Link>
                   <Separator className="my-2" />
-                  <a href="/wishlist" className="text-foreground hover:text-[#D4AF37] transition-colors py-2 flex items-center gap-2">
+                  <Link to="wishlist" className="text-foreground hover:text-[#D4AF37] transition-colors py-2 flex items-center gap-2">
                     <Heart className="h-4 w-4" />
                     Wishlist {wishlistItemsCount > 0 && `(${wishlistItemsCount})`}
-                  </a>
-                  <a href="/cart" className="text-foreground hover:text-[#D4AF37] transition-colors py-2 flex items-center gap-2">
+                  </Link>
+                  <Link to="cart" className="text-foreground hover:text-[#D4AF37] transition-colors py-2 flex items-center gap-2">
                     <ShoppingBag className="h-4 w-4" />
                     Cart {cartItemsCount > 0 && `(${cartItemsCount})`}
-                  </a>
+                  </Link>
                   <Menu>
                     <NavigationMenu>
                       <NavigationMenuList>

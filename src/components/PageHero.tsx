@@ -1,6 +1,7 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "./ui/breadcrumb";
 import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { Badge } from "./ui/badge";
+import { Link } from "react-router-dom";
 
 interface BreadcrumbItem {
   label: string;
@@ -58,8 +59,10 @@ export const PageHero: React.FC<PageHeroProps> = ({
           <Breadcrumb className="mb-4">
             <BreadcrumbList className={hasImage ? 'text-white/80' : ''}>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/" className={`transition-colors ${hasImage ? 'hover:text-[#D4AF37]' : 'hover:text-[#D4AF37]'}`}>
-                  Home
+                <BreadcrumbLink asChild>
+                  <Link to="/" className={`transition-colors ${hasImage ? 'hover:text-[#D4AF37]' : 'hover:text-[#D4AF37]'}`}>
+                    Home
+                  </Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {breadcrumbs.map((crumb, index) => (
@@ -74,10 +77,12 @@ export const PageHero: React.FC<PageHeroProps> = ({
                   ) : (
                     <BreadcrumbItem>
                       <BreadcrumbLink 
-                        href={crumb.href || '#'} 
+                        asChild
                         className={`transition-colors ${hasImage ? 'hover:text-[#D4AF37]' : 'hover:text-[#D4AF37]'}`}
                       >
-                        {crumb.label}
+                        <Link to={crumb.href || '/'}>
+                          {crumb.label}
+                        </Link>
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                   )}

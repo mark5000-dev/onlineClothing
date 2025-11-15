@@ -5,7 +5,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Badge } from "../components/ui/badge";
 import { Heart, ShoppingBag, X, Share2 } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { removeFromWishlist, toggleWishlist } from "../redux/features/wishlistSlice";
+import { removeFromWishlist } from "../redux/features/wishlistSlice";
 import { addToCart } from "../redux/features/cartSlice";
 import { Link } from "react-router-dom";
 import type { CartItem } from "../model";
