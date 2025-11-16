@@ -8,11 +8,16 @@ import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { removeFromWishlist } from "../redux/features/wishlistSlice";
 import { addToCart } from "../redux/features/cartSlice";
 import { Link } from "react-router-dom";
-import type { CartItem } from "../model";
+import type { CartItem, Product } from "../model";
+import { ItemsGrid, ProductCard } from "../components";
 
 export default function Wishlist() {
   const dispatch = useAppDispatch();
   const wishlistItems = useAppSelector(state => state.wishlist.items);
+  const wishlistIds = new Set(wishlistItems.map((item) => item.productId))
+
+  const products = useAppSelector(state => state.products.products);
+  const wishlistProducts = products.filter(product => wishlistIds.has(product.id));
 
   const handleRemove = (id: number) => {
     dispatch(removeFromWishlist(id));
@@ -79,7 +84,7 @@ export default function Wishlist() {
               )}
             </div>
 
-            {wishlistItems.length === 0 ? (
+            { wishlistItems.length === 0 ? (
               <Card className="text-center py-16 border-border">
                 <CardContent className="space-y-4">
                   <div className="flex justify-center">
@@ -103,110 +108,114 @@ export default function Wishlist() {
                   </div>
                 </CardContent>
               </Card>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {wishlistItems.map((item) => (
-                  <Card
-                    key={item.id}
-                    className="group overflow-hidden transition-all hover:shadow-xl border-border"
-                  >
-                    <div className="relative">
-                      {/* Product Image */}
-                      <Link to={`/product/${item.productId}`}>
-                        <div className="relative aspect-[3/4] overflow-hidden bg-muted">
-                          <ImageWithFallback
-                            src={item.image}
-                            alt={item.name}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          />
-                          {!item.inStock && (
-                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                              <Badge variant="secondary" className="text-sm">
-                                Out of Stock
-                              </Badge>
-                            </div>
-                          )}
-                        </div>
-                      </Link>
+            ) : wishlistItems.length !== wishlistProducts.length ? (
+              <div className="sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"> 
+              {wishlistItems.map((item) => {
+                    <Card
+                     key={item.id}
+                     className="group overflow-hidden transition-all hover:shadow-xl border-border"
+                   >
+                     <div className="relative">
+                       {/* Product Image */}
+                       <Link to={`/product/${item.productId}`}>
+                         <div className="relative aspect-[3/4] overflow-hidden bg-muted">
+                           <ImageWithFallback
+                             src={item.image}
+                             alt={item.name}
+                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                           />
+                           {!item.inStock && (
+                             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                               <Badge variant="secondary" className="text-sm">
+                                 Out of Stock
+                               </Badge>
+                             </div>
+                           )}
+                         </div>
+                       </Link>
 
-                      {/* Remove Button */}
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="absolute top-3 right-3 bg-white/90 hover:bg-white z-10"
-                        onClick={() => handleRemove(item.id)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
+                       {/* Remove Button */}
+                       <Button
+                         size="icon"
+                         variant="ghost"
+                         className="absolute top-3 right-3 bg-white/90 hover:bg-white z-10"
+                         onClick={() => handleRemove(item.id)}
+                       >
+                         <X className="h-4 w-4" />
+                       </Button>
 
-                      {/* Quick Add to Cart */}
-                      {item.inStock && (
-                        <div className="absolute bottom-0 left-0 right-0 bg-foreground text-background p-3 translate-y-full group-hover:translate-y-0 transition-transform">
-                          <Button
-                            size="sm"
-                            className="w-full bg-[#D4AF37] text-black hover:bg-[#C5A028]"
-                            onClick={() => handleAddToCart(item)}
-                          >
-                            <ShoppingBag className="h-4 w-4 mr-2" />
-                            Add to Cart
-                          </Button>
-                        </div>
-                      )}
-                    </div>
+                       {/* Quick Add to Cart */}
+                       {item.inStock && (
+                         <div className="absolute bottom-0 left-0 right-0 bg-foreground text-background p-3 translate-y-full group-hover:translate-y-0 transition-transform">
+                           <Button
+                             size="sm"
+                             className="w-full bg-[#D4AF37] text-black hover:bg-[#C5A028]"
+                             onClick={() => handleAddToCart(item)}
+                           >
+                             <ShoppingBag className="h-4 w-4 mr-2" />
+                             Add to Cart
+                           </Button>
+                         </div>
 
-                    {/* Product Info */}
-                    <CardContent className="p-4 space-y-3">
-                      <Link to={`/product/${item.productId}`}>
-                        <h3 className="group-hover:text-[#D4AF37] transition-colors line-clamp-2 min-h-[3rem]">
-                          {item.name}
-                        </h3>
-                      </Link>
+                       )}
+                     </div>
 
-                      <div className="flex items-center justify-between">
-                        <p className="text-[#D4AF37] text-lg">
-                          ${item.price.toLocaleString()}
-                        </p>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
-                          onClick={() => handleRemove(item.id)}
-                        >
-                          <Heart className="h-5 w-5 fill-current" />
-                        </Button>
-                      </div>
+                     {/* Product Info */}
+                     <CardContent className="p-4 space-y-3">
+                       <Link to={`/product/${item.productId}`}>
+                         <h3 className="group-hover:text-[#D4AF37] transition-colors line-clamp-2 min-h-[3rem]">
+                           {item.name}
+                         </h3>
+                       </Link>
+                       <div className="flex items-center justify-between">
+                         <p className="text-[#D4AF37] text-lg">
+                           ${item.price.toLocaleString()}
+                         </p>
+                         <Button
+                           size="icon"
+                           variant="ghost"
+                           className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
+                           onClick={() => handleRemove(item.id)}
+                         >
+                           <Heart className="h-5 w-5 fill-current" />
+                         </Button>
+                       </div>
 
-                      {item.inStock ? (
-                        <Button
-                          className="w-full bg-[#D4AF37] text-black hover:bg-[#C5A028]"
-                          onClick={() => handleAddToCart(item)}
-                        >
-                          Add to Cart
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="outline"
-                          className="w-full"
-                          disabled
-                        >
-                          Out of Stock
-                        </Button>
-                      )}
+                       {item.inStock ? (
+                         <Button
+                           className="w-full bg-[#D4AF37] text-black hover:bg-[#C5A028]"
+                           onClick={() => handleAddToCart(item)}
+                         >
+                           Add to Cart
+                         </Button>
+                       ) : (
+                         <Button
+                           variant="outline"
+                           className="w-full"
+                           disabled
+                         >
+                           Out of Stock
+                         </Button>
+                       )}
 
-                      <p className="text-xs text-muted-foreground">
-                        Added {new Date(item.addedAt).toLocaleDateString('en-US', { 
-                          month: 'short', 
-                          day: 'numeric',
-                          year: 'numeric'
-                        })}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
+                       <p className="text-xs text-muted-foreground">
+                         Added {new Date(item.addedAt).toLocaleDateString('en-US', { 
+                           month: 'short', 
+                           day: 'numeric',
+                           year: 'numeric'
+                         })}
+                       </p>
+                     </CardContent>
+                   </Card>
+              })}
               </div>
-            )}
+            ):(
+              <div> 
+                <ItemsGrid items={wishlistProducts} renderItem={(product: Product) => <ProductCard product={product} key ={product.id} />} />
+              </div>
+            )}      
 
-            {/* Additional Info */}
+
             {wishlistItems.length > 0 && (
               <div className="mt-12 grid md:grid-cols-3 gap-6">
                 <Card className="border-border bg-muted/30 p-6 text-center">
