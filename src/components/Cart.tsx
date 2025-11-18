@@ -8,6 +8,7 @@ import { ScrollArea } from "./ui/scroll-area";
 import { X, Minus, Plus, ShoppingBag, Truck } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { removeFromCart, updateQuantity as updateCartQuantity } from "../redux/features/cartSlice";
+import { Link } from "react-router-dom";
 
 interface CartProps {
   open: boolean;
@@ -31,10 +32,12 @@ export const Cart: React.FC<CartProps> = ({ open, onOpenChange }) =>{
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-full sm:max-w-lg flex flex-col p-0 bg-[#fffaf0]">
         <SheetHeader className="px-6 pt-6 pb-4">
+          <Link to="/cart">
           <SheetTitle className="flex items-center gap-2">
             <ShoppingBag className="h-5 w-5" />
             Shopping Cart ({items.length})
           </SheetTitle>
+          </Link>
         </SheetHeader>
         
         <Separator />
@@ -167,6 +170,17 @@ export const Cart: React.FC<CartProps> = ({ open, onOpenChange }) =>{
                     size="lg"
                   >
                     Proceed to Checkout
+                  </Button>
+
+                  <Button
+                    className="w-full bg-[#D4AF37] text-black hover:bg-[#C5A028]"
+                    size="lg"
+                    asChild
+                    >
+                      <Link to={"/cart"}>
+                      <ShoppingBag className="w-5 h-5"/>
+                      Go to Cart
+                      </Link>
                   </Button>
                   <Button 
                     variant="outline" 
