@@ -1,10 +1,11 @@
 import { Header } from "./components/Header";
-import {lazy, Suspense} from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Footer } from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
 import { useAppDispatch } from "./redux/hooks";
 import { setCategories } from "./redux/features/categoriesSlice";
 import { setProducts } from "./redux/features/productsSlice";
+import { type Product } from "./model";
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -17,13 +18,32 @@ const Profile = lazy(()=> import('./pages/Profile'));
 const Wishlist = lazy(() => import('./pages/Wishlist'));
 
 import { mockCategories as categories } from "./model";
-import { mockProducts as products } from "./model";
+
+async function fetchProducts(): Promise<Product[]> {
+  try {
+    const response = await fetch("./sample_data/sample_data.json");
+
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+    const jsonData: Product[] = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.error("Error fetching or parsing JSON: ", error);
+    return [];
+  }
+}
 
 
 export default function App() {
   const dispatch = useAppDispatch();
+  useEffect(() => {
+  fetchProducts().then((jsonData) => {
+    if (jsonData) dispatch(setProducts(jsonData));
+  });
+  }, [dispatch]);
+
+
   dispatch(setCategories(categories));
-  dispatch(setProducts(products));
   return (
     <div className="min-h-screen">
       <Header />
