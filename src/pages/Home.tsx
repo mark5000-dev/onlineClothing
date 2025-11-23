@@ -1,9 +1,9 @@
 import { Hero } from "../components/Hero";
 import { FeaturedCollection } from "../components/FeaturedCollection";
 import { CategoryShowcase } from "../components/CategoryShowcase";
-import { ProductGrid } from "../components/ProductGrid";
 import { Newsletter } from "../components/Newsletter";
 import type { Product } from "../model";
+import { ProductGrid } from "../components/ProductGrid";
 
 const products: Product[] = [
   {
@@ -49,7 +49,7 @@ export default function Home () {
         <Hero />
         <FeaturedCollection />
         <CategoryShowcase />
-        <ProductGrid products={products}/>
+        < ProductGrid products={products} />
         <Newsletter />
       </main>
     </div>

@@ -18,7 +18,7 @@ import { addToCart } from "../redux/features/cartSlice";
 import { toggleWishlist } from "../redux/features/wishlistSlice";
 import type { CartItem, Product } from "../model";
 
-const oneOP = {
+const oneOP: Product = {
     id: 1,
     name: "Cashmere Overcoat",
     price: 2899,
@@ -39,32 +39,7 @@ const oneOP = {
   };
 
 
-// const fetchProductBySlug = async (slug: string) => {
-//   // Extract id from slug like "cashmere-overcoat-1"
-//   const id = parseInt(slug.split("-").pop() || "0");
-//   const res = await fetch(`/api/products/${id}`); // your backend endpoint later
-//   if (res.ok) return res.json();
 
-//   //fallback mock
-//   return {
-//     id,
-//     name: "Cashmere Overcoat",
-//     price: 2899,
-//     stock: 8,
-//     category: "Outerwear",
-//     description:
-//       "Experience unparalleled luxury with this exquisite cashmere overcoat. Meticulously crafted from the finest 100% pure cashmere, this timeless piece combines supreme comfort with sophisticated elegance.",
-//     images: [
-//       "https://images.unsplash.com/photo-1567777301743-3b7ef158aadf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-//       "https://images.unsplash.com/photo-1670177257750-9b47927f68eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-//       "https://images.unsplash.com/photo-1722842529941-825976fc14f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-//     ],
-//     comments: [
-//       { id: 1, author: "Sarah M.", rating: 5, date: "2 days ago", comment: "Exceptional quality and craftsmanship." },
-//       { id: 2, author: "James R.", rating: 5, date: "1 week ago", comment: "Luxury through and through." },
-//     ],
-//   };
-// };
 
 export default function SingleProduct() {
   const { slug } = useParams();

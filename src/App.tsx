@@ -1,5 +1,5 @@
 import { Header } from "./components/Header";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import { Footer } from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
 import { useAppDispatch } from "./redux/hooks";
@@ -19,7 +19,7 @@ const Wishlist = lazy(() => import('./pages/Wishlist'));
 
 async function fetchProducts(): Promise<Product[]> {
   try {
-    const response = await fetch("./sample_data/sample_data.json");
+    const response = await fetch("/sample_data/sample_data.json");
 
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
@@ -33,7 +33,7 @@ async function fetchProducts(): Promise<Product[]> {
 
 async function fetchCategories(): Promise<Category[]> {
   try {
-    const response = await fetch("./sample_data/mock_categories.json");
+    const response = await fetch("/sample_data/mock_categories.json");
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
     const jsonData: Category[] = await response.json();
@@ -49,16 +49,14 @@ async function fetchCategories(): Promise<Category[]> {
 export default function App() {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
   fetchProducts().then((jsonData) => {
-    if (jsonData) dispatch(setProducts(jsonData));
+    if (jsonData) { console.log(jsonData); dispatch(setProducts(jsonData));}
 
   fetchCategories().then((jsonData) => {
-    if (jsonData) dispatch(setCategories(jsonData));
+    if (jsonData) { console.log(jsonData); dispatch(setCategories(jsonData));}
 
-  })
   });
-  }, [dispatch]);
+  });
 
 
   return (
