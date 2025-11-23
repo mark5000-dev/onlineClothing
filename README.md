@@ -75,7 +75,7 @@ cd onlineClothing
 2. Install dependencies:
 
 ```
-
+npm install
 ```
 
 ### Development
@@ -83,7 +83,7 @@ cd onlineClothing
 Start the development server (hot reload):
 
 ```
-Add screenshots or GIFs demonstrating the UI and user flow.
+npm run dev
 ```
 
 Open `http://localhost:5173` (or the URL printed by Vite) in your browser.
@@ -93,13 +93,13 @@ Open `http://localhost:5173` (or the URL printed by Vite) in your browser.
 Build a production bundle:
 
 ```
-
+npm run build
 ```
 
 Preview the production build locally (if `preview` script exists):
 
 ```
-
+npm run preview
 ```
 
 ### Notes
@@ -121,7 +121,14 @@ This will launch the app in development mode with live reload.
 
 ## Screenshots
 
-Add one or more screenshots or short GIFs demonstrating the UI and user flow. Place assets under `public/` and reference them here.
+Images are placed  under `public/` and reference them there.
+    <image src="public/home.png">
+<image src="public/categories.png">
+<image src="public/singleCollection.png">
+<image src="public/products.png">
+<image src="public/singleProduct.png">
+<image src="public/about.png">
+
 
 ---
 
