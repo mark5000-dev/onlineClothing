@@ -9,14 +9,14 @@ const categories: Categories  = [
     name: "Women's Collection",
     image: "https://images.unsplash.com/photo-1610209740880-6ecc4b20ea78?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNpZ25lciUyMGRyZXNzfGVufDF8fHx8MTc2MjAyMjMwN3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     description: "Elegant dresses, sophisticated separates",
-    slug: "women"
+    slug: "womens-collection"
   },
   {
     id: "2",
     name: "Men's Collection",
     image: "https://images.unsplash.com/photo-1553315164-49bb0615e0c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzdWl0fGVufDF8fHx8MTc2MjA2NDQyMHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     description: "Tailored suits, refined essentials",
-    slug: "men"
+    slug: "mens-collection"
   },
   {
     id: "3",
