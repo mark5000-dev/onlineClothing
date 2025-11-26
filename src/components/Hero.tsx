@@ -1,6 +1,7 @@
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 import { ImageWithFallback } from "./ui/ImageWithFallback";
+import { Link } from "react-router-dom";
 
 export const Hero : React.FC = () => {
   return (
@@ -35,13 +36,16 @@ export const Hero : React.FC = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
+            <Link to="/categories">
             <Button 
               size="lg" 
               className="bg-[#D4AF37] text-black hover:bg-[#C5A028] transition-all px-8 py-6"
             >
-              Shop Collection
+              Shop Collections
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
+            </Link>
+            <Link to="/products">
             <Button 
               size="lg" 
               variant="outline" 
@@ -49,6 +53,7 @@ export const Hero : React.FC = () => {
             >
               Explore Lookbook
             </Button>
+            </Link>
           </div>
         </div>
       </div>

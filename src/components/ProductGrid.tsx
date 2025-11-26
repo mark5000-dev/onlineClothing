@@ -2,10 +2,17 @@ import { Button } from "./ui/button";
 import type { Product } from "../model";
 import { Link } from "react-router-dom";
 import { ProductCard } from "./ProductCard";
+import { useAppSelector } from "../redux/hooks";
+
 //import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 
 
-export const ProductGrid: React.FC<{ products: Product[] }> = ({products}) => {
+
+export const ProductGrid: React.FC = () => {
+  const allProducts: Product[] = useAppSelector((state) => state.products.products);
+
+  const products = allProducts.slice(0, 4);
+
   return (
     <section className="py-20 bg-card">
       <div className="container mx-auto px-4 lg:px-8">

@@ -11,7 +11,7 @@ const subcategories = [
   { id: "mens-collection", label: "Men" },
   { id: "kids-collection", label: "Kids" },
   { id: "accessories", label: "Accessories" },
-  { id: "shoees", label: "Shoes" },
+  { id: "shoes", label: "Shoes" },
   { id: "jewelry", label: "Jewelry" },
 ];
 
