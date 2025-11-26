@@ -107,8 +107,10 @@ export default function CartPage() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="#" className="hover:text-[#D4AF37] transition-colors">
+                  <BreadcrumbLink className="hover:text-[#D4AF37] transition-colors" asChild>
+                  <Link to={"/"}>
                     Home
+                  </Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />

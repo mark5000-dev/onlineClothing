@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from "react";
 import { PageHero } from "../components/PageHero";
 import { SubcategoryNav } from "../components/SubCategoryNav";
 import { ItemsToolbar } from "../components/ItemsToolbar";
-//import { ItemsFilter } from "../components/ItemsFilter";
 import { ItemsGrid } from "../components/ItemsGrid";
 import { ProductCard } from "../components/ProductCard";
 import { CollectionInfo } from "../components/Info";
@@ -10,82 +9,6 @@ import { type Product, type Subcategory} from "../model";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 
-// const filterSections = [
-//   {
-//     id: "price",
-//     title: "Price Range",
-//     type: "slider" as const,
-//     min: 0,
-//     max: 3000,
-//     step: 50,
-//     value: [0, 3000],
-//   },
-//   {
-//     id: "size",
-//     title: "Size",
-//     type: "buttons" as const,
-//     options: [
-//       { id: "xs", label: "XS" },
-//       { id: "s", label: "S" },
-//       { id: "m", label: "M" },
-//       { id: "l", label: "L" },
-//       { id: "xl", label: "XL" },
-//       { id: "xxl", label: "XXL" },
-//     ],
-//   },
-//   {
-//     id: "color",
-//     title: "Color",
-//     type: "colors" as const,
-//     colors: [
-//       "#000000",
-//       "#FFFFFF",
-//       "#8B4513",
-//       "#1A1A1A",
-//       "#D4AF37",
-//       "#2C3E50",
-//       "#C19A6B",
-//       "#8B0000",
-//       "#2F4F4F",
-//       "#4B0082",
-//     ],
-//   },
-//   {
-//     id: "material",
-//     title: "Material",
-//     type: "checkbox" as const,
-//     options: [
-//       { id: "silk", label: "Silk" },
-//       { id: "wool", label: "Wool" },
-//       { id: "cotton", label: "Cotton" },
-//       { id: "cashmere", label: "Cashmere" },
-//       { id: "leather", label: "Leather" },
-//       { id: "linen", label: "Linen" },
-//     ],
-//   },
-// ];
-
-// // Mock API function
-// function fetchCategoryData(slug: string): Promise<CategoryData> {
-//   const allProducts = products;
-
-//   const allSubcategories: Subcategory[] = [
-//     { id: "all", label: "All Items" },
-//     { id: "dresses", label: "Dresses" },
-//     { id: "tops", label: "Tops" },
-//     { id: "bottoms", label: "Bottoms" },
-//     { id: "outerwear", label: "Outerwear" },
-//   ];
-
-//   const filteredProducts = allProducts.filter((product) => product.mainCategory === slug);
-
-//   return Promise.resolve({
-//     products: filteredProducts,
-//     subcategories: allSubcategories,
-//     hero: "https://images.unsplash.com/photo-1661268095505-cbfb42ef6f2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-//     title: slug === "womens" ? "Women's Collection" : "Category Title",
-//   });
-// }
 
 export default function SingleCategory() {
   const { slug } = useParams<{ slug: string }>();
