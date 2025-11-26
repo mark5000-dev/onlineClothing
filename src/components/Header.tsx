@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "./ui/navigation-menu";
 import { Separator } from "./ui/separator";
 import { useState } from "react";
 import { Cart } from "./Cart";
@@ -91,13 +90,6 @@ export const Header:React.FC = () => {
               )}
             </Button>
 
-            <Menu>
-                <NavigationMenu>
-                  <NavigationMenuList>
-                    <NavigationMenuItem><NavigationMenuLink></NavigationMenuLink></NavigationMenuItem>
-                  </NavigationMenuList>
-                </NavigationMenu>
-            </Menu>
             
             {/* Mobile Menu Sheet */}
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -106,7 +98,7 @@ export const Header:React.FC = () => {
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetContent side="right" className=" bg-[#fffaf0] w-[300px] sm:w-[400px]">
                 <SheetHeader>
                   <SheetTitle className="font-serif text-[1.5rem]">
                     <span className="text-foreground">LUX</span>
@@ -115,37 +107,30 @@ export const Header:React.FC = () => {
                 </SheetHeader>
                 <Separator className="my-4" />
                 <nav className="flex flex-col gap-4">
-                  <Link to="/category/new" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
+                  <Link to="/products" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
                     New Arrivals
                   </Link>
-                  <Link to="category/women" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
+                  <Link to="/category/womens-collection" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
                     Women
                   </Link>
-                  <Link to="category/men" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
+                  <Link to="/category/mens-collection" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
                     Men
                   </Link>
-                  <Link to="categories" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
+                  <Link to="/categories" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
                     Collections
                   </Link>
-                  <Link to="about" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
+                  <Link to="/about" className="text-foreground hover:text-[#D4AF37] transition-colors py-2">
                     About
                   </Link>
                   <Separator className="my-2" />
-                  <Link to="wishlist" className="text-foreground hover:text-[#D4AF37] transition-colors py-2 flex items-center gap-2">
+                  <Link to="/wishlist" className="text-foreground hover:text-[#D4AF37] transition-colors py-2 flex items-center gap-2">
                     <Heart className="h-4 w-4" />
                     Wishlist {wishlistItemsCount > 0 && `(${wishlistItemsCount})`}
                   </Link>
-                  <Link to="cart" className="text-foreground hover:text-[#D4AF37] transition-colors py-2 flex items-center gap-2">
+                  <Link to="/cart" className="text-foreground hover:text-[#D4AF37] transition-colors py-2 flex items-center gap-2">
                     <ShoppingBag className="h-4 w-4" />
                     Cart {cartItemsCount > 0 && `(${cartItemsCount})`}
                   </Link>
-                  <Menu>
-                    <NavigationMenu>
-                      <NavigationMenuList>
-                      <NavigationMenuItem><NavigationMenuLink></NavigationMenuLink></NavigationMenuItem>
-                      </NavigationMenuList>
-                    </NavigationMenu>
-                  </Menu>
                 </nav>
               </SheetContent>
             </Sheet>
