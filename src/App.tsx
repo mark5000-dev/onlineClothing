@@ -19,10 +19,9 @@ const Wishlist = lazy(() => import('./pages/Wishlist'));
 
 async function fetchProducts(): Promise<Product[]> {
   try {
-    const response = await fetch("/sample_data/sample_data.json");
+    const response = await fetch(`${import.meta.env.BASE_URL}/sample_data/sample_data.json`);
 
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
     const jsonData: Product[] = await response.json();
     return jsonData;
   } catch (error) {
@@ -33,7 +32,7 @@ async function fetchProducts(): Promise<Product[]> {
 
 async function fetchCategories(): Promise<Category[]> {
   try {
-    const response = await fetch("/sample_data/mock_categories.json");
+    const response = await fetch(`${import.meta.env.BASE_URL}/sample_data/mock_categories.json`);
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
     const jsonData: Category[] = await response.json();
